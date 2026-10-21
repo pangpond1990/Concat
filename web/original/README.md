@@ -37,7 +37,7 @@ recents from the installed desktop app. Then:
 node web/original/server.mjs
 ```
 
-Open `http://127.0.0.1:4318`. `CONCAT_WEB_BINARY`, `CONCAT_WEB_DATA` and `PORT`
+Open `http://127.0.0.1:4317`. `CONCAT_WEB_BINARY`, `CONCAT_WEB_DATA` and `PORT`
 configure the host binary, import storage and local port. Imported files are
 copied into `web/original-data/imports/`; original files are untouched.
 

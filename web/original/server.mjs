@@ -8,7 +8,7 @@ import {randomUUID} from 'node:crypto';
 import {Transform} from 'node:stream';
 import {pipeline} from 'node:stream/promises';
 import {OriginalHost} from './native.mjs';
-const here=fileURLToPath(new URL('.',import.meta.url));
+const here=path.dirname(fileURLToPath(import.meta.url));
 const repo=path.resolve(here,'../..');
 const data=path.resolve(process.env.CONCAT_WEB_DATA||path.join(repo,'web','original-data'));
 await mkdir(path.join(data,'imports'),{recursive:true});
@@ -40,6 +40,7 @@ const server=http.createServer(async(req,res)=>{
     }
     if(req.method==='POST'&&url.pathname==='/api/action'){
       const {name,args}=await body(req);if(!callbacks.has(name)||!Array.isArray(args))throw new Error('Unknown UI callback');
+      if(name==='App.settings-install-version')throw new Error('Update this browser build through its build artifacts; desktop self-update is unavailable here');
       await host.request('invoke',{name,args});json(res,200,{ok:true});return;
     }
     if(req.method==='POST'&&url.pathname==='/api/drop'){
@@ -80,5 +81,5 @@ const server=http.createServer(async(req,res)=>{
     json(res,404,{error:'Not found'});
   }catch(error){if(!res.headersSent)json(res,400,{error:error.message});else res.destroy();}
 });
-server.listen(Number(process.env.PORT||4318),'127.0.0.1',()=>console.log('Original Concat UI: http://127.0.0.1:'+(process.env.PORT||4318)));
+server.listen(Number(process.env.PORT||4317),'127.0.0.1',()=>console.log('Original Concat UI: http://127.0.0.1:'+(process.env.PORT||4317)));
 for(const signal of ['SIGINT','SIGTERM'])process.on(signal,()=>{server.close();host.close();});

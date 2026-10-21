@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Browser I/O only. Editing UI and behavior come from upstream Slint/Rust.
-import init,{apply_snapshot,resize,pointer_down} from './pkg/concat_browser.js';
+import init,* as ui from './pkg/concat_browser.js';
+const {apply_snapshot,resize}=ui;
 const $=id=>document.getElementById(id),client=crypto.randomUUID();
 let activePicker=null,actions=Promise.resolve(),noticeTimer;
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 function notice(message,link){clearTimeout(noticeTimer);$('notice').textContent=message;if(link){const a=document.createElement('a');a.textContent=link.label;a.href=link.href;if(link.download)a.download='';else {a.target='_blank';a.rel='noopener';}$('notice').append(a);}$('notice').hidden=false;noticeTimer=setTimeout(()=>$('notice').hidden=true,link?30000:8000);}
 async function api(url,body){const response=await fetch(url,{method:body===undefined?'GET':'POST',headers:body===undefined?{}:{'Content-Type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});const result=await response.json();if(!response.ok)throw new Error(result.error);return result;}
-$('canvas').addEventListener('pointerdown',event=>pointer_down(event.offsetX,event.offsetY),true);
-window.addEventListener('concat-ui',event=>{const action=JSON.parse(event.detail);actions=actions.then(()=>api('/api/action',action)).catch(error=>notice(error.message));});
-async function stateLoop(){while(true){try{const state=await api('/api/state?client='+client);apply_snapshot(JSON.stringify(state));$('status').hidden=true;}catch(error){notice(error.message);}await delay(document.hidden?1000:80);}}
+$('canvas').addEventListener('pointerdown',event=>ui.pointer_down?.(event.offsetX,event.offsetY),true);
+window.addEventListener('concat-ui',event=>{const action=JSON.parse(event.detail);$('canvas').dataset.lastAction=action.name;actions=actions.then(()=>api('/api/action',action)).catch(error=>{console.error('Concat action',error);notice(error.message);});});
+async function stateLoop(){while(true){try{const state=await api('/api/state?client='+client);apply_snapshot(JSON.stringify(state));$('canvas').dataset.lastSync=String(Date.now());$('canvas').dataset.changedKeys=String(Object.keys(state).length);$('status').hidden=true;}catch(error){console.error('Concat state sync',error);notice(error.message);}await delay(document.hidden?1000:80);}}
 async function eventsLoop(){while(true){try{for(const event of await api('/api/events')){
  if(['files','folder','save'].includes(event.kind)){
   activePicker=event;$('picker-title').textContent=event.title;$('picker-status').textContent='';$('picker-files').value='';
@@ -29,7 +30,8 @@ $('picker-form').onsubmit=async event=>{event.preventDefault();if(!activePicker)
  }else {const value=$('picker-path').value.trim();if(!value.startsWith('/'))throw new Error('Enter an absolute path on this Mac');paths=[value];}
  await api('/api/picker',{picker,paths});activePicker=null;$('picker').close();
  }catch(error){$('picker-status').textContent=error.message;}finally{button.disabled=false;}};
-try{await init();const fit=()=>resize(innerWidth,innerHeight);fit();window.addEventListener('resize',fit);stateLoop();eventsLoop();}
+// winit hands control to the browser event loop using this documented sentinel.
+try{try{await init();}catch(error){if(!String(error).includes("Using exceptions for control flow, don't mind me. This isn't actually an error!"))throw error;}const fit=()=>resize(innerWidth,innerHeight);fit();window.addEventListener('resize',fit);stateLoop();eventsLoop();}
 catch(error){$('status').textContent='Could not load the original interface: '+error.message;}
 
 window.addEventListener('dragover',event=>{if(event.dataTransfer.types.includes('Files')){event.preventDefault();event.dataTransfer.dropEffect='copy';}});

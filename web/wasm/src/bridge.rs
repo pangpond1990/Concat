@@ -52,7 +52,7 @@ pub fn apply_snapshot(text:&str)->Result<(),JsValue> {
   crate::i18n::select(lang,&crate::BrowserDirs{config:Default::default()});
  }
  APPLYING.with(|v|v.set(true));
- let result=APP.with(|slot|slot.borrow().as_ref().ok_or("UI is not ready".to_string()).and_then(|app|generated::apply(app,&value)));
+ let result=APP.with(|slot|slot.borrow().as_ref().ok_or("UI is not ready".to_string()).and_then(|app|{let result=generated::apply(app,&value);app.window().request_redraw();result}));
  APPLYING.with(|v|v.set(false));
  result.map_err(|e|JsValue::from_str(&e))
 }

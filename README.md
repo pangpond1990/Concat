@@ -1,6 +1,6 @@
-> **PON Cut: local browser editor powered by Concat.** This fork adds a web UI on `feat/web-editor`.
-> Open `Start PON Cut.command` on macOS, or see [web setup and usage](web/README.md).
-> Original Concat engine and desktop source are preserved below.
+> **Original Concat UI in the browser** — development branch `feat/original-ui-web`.
+> Compiles the upstream Slint interface to WebAssembly and connects it to the original Rust engine on this Mac.
+> Start with `Start Concat Web.command`; see [setup, validation and limitations](web/original/README.md).
 
 <p align="center">
   <img src="https://cdn.jsdelivr.net/gh/jub0t/Concat@main/assets/concat-mark-dark.png" alt="Concat" width="100" />
