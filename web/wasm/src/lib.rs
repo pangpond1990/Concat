@@ -4,7 +4,10 @@ use slint::ComponentHandle;
 use wasm_bindgen::prelude::*;
 mod ui { slint::include_modules!(); }
 mod bridge;
-pub use bridge::{apply_snapshot,resize};
+mod font_data {include!(concat!(env!("OUT_DIR"),"/font_data.rs"));}
+#[path="../../../src/crates/concat/src/fonts.rs"] mod fonts;
+pub use bridge::{apply_snapshot,resize,pointer_down};
+#[path="../../../src/crates/concat/src/focus.rs"] mod focus;
 #[path="../../../src/crates/concat/src/keymap.rs"] mod keymap;
 #[path="../../../src/crates/concat/src/speech_text.rs"] mod speech_text;
 mod prefs { #[derive(Default)] pub struct Preferences { pub keybinds:std::collections::HashMap<String,String> } }
@@ -13,25 +16,16 @@ mod platform { pub fn keys(parts:&[&str])->String {parts.join("+")} pub fn delet
 #[path = "../../../src/crates/concat/src/format.rs"]
 mod format;
 
-mod i18n {
-    use std::collections::HashMap;
-    use std::sync::OnceLock;
-    pub fn t(key: &str) -> String {
-        static WORDS: OnceLock<HashMap<String, serde_json::Value>> = OnceLock::new();
-        WORDS.get_or_init(|| serde_json::from_str(include_str!("../../../src/crates/concat/locales/en.json")).unwrap())
-            .get(key).and_then(|v| v.as_str()).unwrap_or(key).to_string()
-    }
-    pub fn tf(key: &str, args: &[&dyn std::fmt::Display]) -> String {
-        let mut value=t(key);
-        for (i,arg) in args.iter().enumerate() { value=value.replace(&format!("{{{i}}}"), &arg.to_string()); }
-        value
-    }
-}
+// The original catalogue/lookup code runs in the browser. There are no local
+// filesystem overlays in WASM; the original built-in language files still apply.
+pub struct BrowserDirs { pub config: std::path::PathBuf }
+#[path="../../../src/crates/concat/src/i18n.rs"] mod i18n;
 
 #[wasm_bindgen(start)]
 pub fn start() -> Result<(), JsValue> {
     console_error_panic_hook::set_once();
     let app=ui::App::new().map_err(|e| JsValue::from_str(&e.to_string()))?;
+    fonts::register();
     let words=app.global::<ui::I18n>();
     words.on_lookup(|_,key| i18n::t(&key).into());
     words.on_lookup1(|_,key,a| i18n::tf(&key,&[&a]).into());

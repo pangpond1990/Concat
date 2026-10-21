@@ -25,6 +25,8 @@
 //! too; their sources, the way they were cut and their licences are on
 //! `concat_text::SCRIPT_FALLBACKS`, and THIRD_PARTY_NOTICES.md lists them.
 
+#[cfg(target_arch = "wasm32")]
+use crate::font_data as concat_text;
 use std::sync::Arc;
 
 use slint::fontique_011::fontique::{self, FallbackKey, FamilyId, Language, Script};

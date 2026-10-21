@@ -42,6 +42,10 @@ const server=http.createServer(async(req,res)=>{
       const {name,args}=await body(req);if(!callbacks.has(name)||!Array.isArray(args))throw new Error('Unknown UI callback');
       await host.request('invoke',{name,args});json(res,200,{ok:true});return;
     }
+    if(req.method==='POST'&&url.pathname==='/api/drop'){
+      const {paths}=await body(req);if(!Array.isArray(paths)||!paths.every(p=>typeof p==='string'&&path.resolve(p).startsWith(path.join(data,'imports')+path.sep)))throw new Error('Invalid imported paths');
+      await host.request('import',{paths});json(res,200,{ok:true});return;
+    }
     if(req.method==='GET'&&url.pathname==='/api/events'){
       const events=await host.request('events');
       for(const event of events)if(event.kind==='reveal'){

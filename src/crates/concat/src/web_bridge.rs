@@ -58,7 +58,10 @@ pub fn start() {
                                 let paths=request["paths"].as_array().ok_or("missing paths")?.iter()
                                     .map(|v|v.as_str().map(std::path::PathBuf::from).ok_or("invalid path".to_string())).collect::<Result<Vec<_>,_>>()?;
                                 let mut studio=shell.studio.borrow_mut();
-                                studio.handle(crate::panes::Msg::Media(crate::panes::media_bin::MediaMsg::Import(paths)));
+                                let to_library=studio.sounds.shown && !paths.is_empty() && paths.iter().all(|p|concat_host::sounds::is_sound(p));
+                                if studio.on_start {studio.handle(crate::panes::Msg::Start(crate::panes::start::StartMsg::Dropped(paths)));}
+                                else if to_library {studio.handle(crate::panes::Msg::Sounds(crate::panes::sounds::SoundsMsg::Import(paths)));}
+                                else {studio.handle(crate::panes::Msg::Media(crate::panes::media_bin::MediaMsg::Import(paths)));}
                                 studio.refresh_art();studio.publish(&app,&shell.models);
                             },
                             "open" => {

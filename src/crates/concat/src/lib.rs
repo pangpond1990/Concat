@@ -66,6 +66,7 @@ mod prefs;
 mod presets;
 mod source;
 mod speech_text;
+mod focus;
 mod speed_ramp;
 mod studio;
 mod sysinfo;

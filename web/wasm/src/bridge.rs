@@ -10,6 +10,7 @@ thread_local! {
  static APP: std::cell::RefCell<Option<App>>=const {std::cell::RefCell::new(None)};
  static APPLYING: std::cell::Cell<bool>=const {std::cell::Cell::new(false)};
  static KEYBINDS: std::cell::RefCell<crate::prefs::Preferences>=Default::default();
+ static MACOS: std::cell::Cell<bool>=const {std::cell::Cell::new(false)};
  static CAPTURING: std::cell::Cell<bool>=const {std::cell::Cell::new(false)};
 }
 #[wasm_bindgen(inline_js="export function original_ui_event(value) { window.dispatchEvent(new CustomEvent('concat-ui', { detail: value })); }")]
@@ -28,7 +29,10 @@ pub fn bind(app:&App) {
  app.global::<Payload>().on_text(|value|value.plain_text().unwrap_or_default());
  app.global::<Payload>().on_pane_seat(|text|text.strip_prefix("pane:").and_then(|s|s.split(':').next()).and_then(|s|s.parse().ok()).unwrap_or(-1));
  app.global::<Payload>().on_tab_index(|text|text.strip_prefix("tab:").and_then(|s|s.split(':').next()).and_then(|s|s.parse().ok()).unwrap_or(-1));
- app.global::<Editor>().on_key_chord(|text,shift,alt,control,meta,on_start| {
+ let weak=app.as_weak();
+ app.global::<Editor>().on_blur(move || {if let Some(app)=weak.upgrade(){app.invoke_blur();}});
+ app.global::<Editor>().on_key_chord(|text,shift,alt,mut control,mut meta,on_start| {
+  if MACOS.with(|v|v.get()) && meta && !control {control=true;meta=false;}
   let capturing=CAPTURING.with(|c|c.get());
   let handled=capturing || (!on_start && crate::keymap::chord(&text,shift,alt,control,meta)
     .is_some_and(|chord|KEYBINDS.with(|p|crate::keymap::resolve(&p.borrow(),&chord).is_some())));
@@ -41,8 +45,12 @@ pub fn bind(app:&App) {
 #[wasm_bindgen]
 pub fn apply_snapshot(text:&str)->Result<(),JsValue> {
  let value:Value=serde_json::from_str(text).map_err(|e|JsValue::from_str(&e.to_string()))?;
+ if let Some(macos)=value.get("App.macos").and_then(Value::as_bool) {MACOS.with(|v|v.set(macos));}
  if let Some(keys)=value.get("__keybinds") {KEYBINDS.with(|p|p.borrow_mut().keybinds=serde_json::from_value(keys.clone()).unwrap_or_default());}
  if let Some(capture)=value.get("__capturing").and_then(Value::as_bool) {CAPTURING.with(|c|c.set(capture));}
+ if let Some(lang)=value.get("I18n.lang").and_then(Value::as_str) {
+  crate::i18n::select(lang,&crate::BrowserDirs{config:Default::default()});
+ }
  APPLYING.with(|v|v.set(true));
  let result=APP.with(|slot|slot.borrow().as_ref().ok_or("UI is not ready".to_string()).and_then(|app|generated::apply(app,&value)));
  APPLYING.with(|v|v.set(false));
@@ -51,4 +59,9 @@ pub fn apply_snapshot(text:&str)->Result<(),JsValue> {
 #[wasm_bindgen]
 pub fn resize(width:f32,height:f32) {
  APP.with(|slot|if let Some(app)=slot.borrow().as_ref(){app.window().set_size(slint::LogicalSize::new(width.max(900.0),height.max(560.0)));});
+}
+
+#[wasm_bindgen]
+pub fn pointer_down(x:f32,y:f32) {
+ APP.with(|slot|if let Some(app)=slot.borrow().as_ref(){if crate::focus::press_misses_focused_input(app.window(),x,y){app.invoke_blur();}});
 }

@@ -35,7 +35,10 @@ use std::collections::HashMap;
 use std::fmt::Display;
 use std::sync::{Arc, OnceLock, RwLock};
 
+#[cfg(not(target_arch = "wasm32"))]
 use concat_host::AppDirs;
+#[cfg(target_arch = "wasm32")]
+use crate::BrowserDirs as AppDirs;
 
 /// A language the interface can be in.
 #[derive(Clone, Debug, PartialEq, Eq)]
