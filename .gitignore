@@ -65,3 +65,5 @@ desktop.ini
 /web/*.log
 /web/wasm/target/
 /web/wasm/pkg/
+
+/web/original-data/

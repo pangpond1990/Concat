@@ -4,7 +4,7 @@ use slint::ComponentHandle;
 use wasm_bindgen::prelude::*;
 mod ui { slint::include_modules!(); }
 mod bridge;
-pub use bridge::apply_snapshot;
+pub use bridge::{apply_snapshot,resize};
 #[path="../../../src/crates/concat/src/keymap.rs"] mod keymap;
 #[path="../../../src/crates/concat/src/speech_text.rs"] mod speech_text;
 mod prefs { #[derive(Default)] pub struct Preferences { pub keybinds:std::collections::HashMap<String,String> } }

@@ -38,6 +38,8 @@ impl<T:Wire+Clone+Default+PartialEq+'static> Wire for ModelRc<T> {
 }
 #[cfg(not(target_arch="wasm32"))]
 thread_local! {static IMAGES:std::cell::RefCell<std::collections::VecDeque<(slint::Image,Value)>>=Default::default();}
+#[cfg(target_arch="wasm32")]
+thread_local! {static DECODED:std::cell::RefCell<std::collections::VecDeque<(String,slint::Image)>>=Default::default();}
 impl Wire for slint::Image {
  fn wire(&self)->Value {
   #[cfg(not(target_arch="wasm32"))] {
@@ -61,9 +63,13 @@ impl Wire for slint::Image {
  fn update(&mut self,v:&Value)->Result<()> {
   if v.is_null() {*self=Self::default();return Ok(());}
   let encoded=v.get("png").and_then(Value::as_str).ok_or("expected image")?;
+  #[cfg(target_arch="wasm32")]
+  if let Some(image)=DECODED.with(|cache|cache.borrow().iter().find(|(key,_)|key==encoded).map(|(_,image)|image.clone())) {*self=image;return Ok(());}
   let bytes=base64::engine::general_purpose::STANDARD.decode(encoded).map_err(|e|e.to_string())?;
   let pixels=image::load_from_memory_with_format(&bytes,image::ImageFormat::Png).map_err(|e|e.to_string())?.into_rgba8();
   *self=Self::from_rgba8(slint::SharedPixelBuffer::<slint::Rgba8Pixel>::clone_from_slice(pixels.as_raw(),pixels.width(),pixels.height()));
+  #[cfg(target_arch="wasm32")]
+  DECODED.with(|cache|{let mut cache=cache.borrow_mut();if cache.len()>=128 {cache.pop_front();}cache.push_back((encoded.to_owned(),self.clone()));});
   Ok(())
  }
 }

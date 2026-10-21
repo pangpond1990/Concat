@@ -700,6 +700,8 @@ pub fn toggle_maximize(window: &slint::Window) {
 
 /// Asks for a folder, starting at `start` when there is one.
 pub fn pick_folder(title: &str, start: &str) -> Option<PathBuf> {
+    #[cfg(feature="web-bridge")]
+    if crate::web_bridge::enabled() {return crate::web_bridge::pick("folder",title,start,"",&[]).and_then(|v|v.into_iter().next());}
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     {
         let mut dialog = rfd::FileDialog::new().set_title(title);
@@ -893,6 +895,8 @@ pub fn install_link_opener(opener: LinkOpener) {
 /// platform's opener; Android to an ACTION_VIEW intent through the
 /// activity, iOS to UIApplication. An address that goes nowhere says why.
 pub fn open_link(url: &str) -> Result<(), String> {
+    #[cfg(feature="web-bridge")]
+    if crate::web_bridge::enabled() {crate::web_bridge::event(serde_json::json!({"kind":"link","url":url}));return Ok(());}
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     {
         opener::open(url).map_err(|error| error.to_string())
@@ -1035,6 +1039,8 @@ pub fn save_file(
     name: &str,
     filter: (&str, &[&str]),
 ) -> Option<PathBuf> {
+    #[cfg(feature="web-bridge")]
+    if crate::web_bridge::enabled() {return crate::web_bridge::pick("save",title,&directory.to_string_lossy(),name,filter.1).and_then(|v|v.into_iter().next());}
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     {
         let (family, extensions) = filter;
@@ -1055,6 +1061,8 @@ pub fn save_file(
 /// Asks for files. `filter` names a family and its extensions, and limits
 /// the dialog to them.
 pub fn pick_files(title: &str, filter: Option<(&str, &[&str])>) -> Option<Vec<PathBuf>> {
+    #[cfg(feature="web-bridge")]
+    if crate::web_bridge::enabled() {return crate::web_bridge::pick("files",title,"","",filter.map(|f|f.1).unwrap_or(&[]));}
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     {
         let mut dialog = rfd::FileDialog::new().set_title(title);
@@ -1077,6 +1085,8 @@ pub fn pick_files(title: &str, filter: Option<(&str, &[&str])>) -> Option<Vec<Pa
 /// that explains itself. The path is in the message, which is the part a
 /// developer on a cable can still use.
 pub fn reveal(path: &str) -> Result<(), String> {
+    #[cfg(feature="web-bridge")]
+    if crate::web_bridge::enabled() {crate::web_bridge::event(serde_json::json!({"kind":"reveal","path":path}));return Ok(());}
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     {
         opener::reveal(path).map_err(|error| error.to_string())

@@ -15,7 +15,7 @@ thread_local! {
 #[wasm_bindgen(inline_js="export function original_ui_event(value) { window.dispatchEvent(new CustomEvent('concat-ui', { detail: value })); }")]
 extern "C" { fn original_ui_event(value:&str); }
 pub fn emit(name:&str,args:Vec<Value>) {
- if !APPLYING.with(|v|v.get()) {original_ui_event(&json!({name,args}).to_string());}
+ if !APPLYING.with(|v|v.get()) {original_ui_event(&json!({"name":name,"args":args}).to_string());}
 }
 
 pub fn bind(app:&App) {
@@ -47,4 +47,8 @@ pub fn apply_snapshot(text:&str)->Result<(),JsValue> {
  let result=APP.with(|slot|slot.borrow().as_ref().ok_or("UI is not ready".to_string()).and_then(|app|generated::apply(app,&value)));
  APPLYING.with(|v|v.set(false));
  result.map_err(|e|JsValue::from_str(&e))
+}
+#[wasm_bindgen]
+pub fn resize(width:f32,height:f32) {
+ APP.with(|slot|if let Some(app)=slot.borrow().as_ref(){app.window().set_size(slint::LogicalSize::new(width.max(900.0),height.max(560.0)));});
 }

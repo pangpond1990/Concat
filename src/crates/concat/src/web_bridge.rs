@@ -10,13 +10,41 @@ use crate::host::Shell;
 
 pub fn enabled() -> bool {std::env::var_os("CONCAT_WEB_BRIDGE").is_some()}
 
+type PickSender=std::sync::mpsc::SyncSender<Option<Vec<std::path::PathBuf>>>;
+static EVENTS:std::sync::Mutex<Vec<Value>>=std::sync::Mutex::new(Vec::new());
+static PICKS:std::sync::Mutex<Vec<(u64,PickSender)>>=std::sync::Mutex::new(Vec::new());
+static PICK_ID:std::sync::atomic::AtomicU64=std::sync::atomic::AtomicU64::new(1);
+pub fn event(value:Value) { EVENTS.lock().unwrap().push(value); }
+pub fn pick(kind:&str,title:&str,start:&str,name:&str,extensions:&[&str])->Option<Vec<std::path::PathBuf>> {
+ let id=PICK_ID.fetch_add(1,std::sync::atomic::Ordering::Relaxed);
+ let (tx,rx)=std::sync::mpsc::sync_channel(1);
+ PICKS.lock().unwrap().push((id,tx));
+ event(json!({"kind":kind,"id":id,"title":title,"start":start,"name":name,"extensions":extensions}));
+ rx.recv().ok().flatten()
+}
+fn answer(id:Value,result:Result<Value,String>) {
+ let response=match result { Ok(result)=>json!({"id":id,"result":result}),Err(error)=>json!({"id":id,"error":error}) };
+ let mut out=std::io::stdout().lock();let _=writeln!(out,"{response}");let _=out.flush();
+}
 pub fn start() {
     std::thread::spawn(|| {
         for line in std::io::stdin().lock().lines() {
             let Ok(line)=line else {break};
             let request:Value=match serde_json::from_str(&line) {Ok(v)=>v,Err(_)=>continue};
-            let (tx,rx)=std::sync::mpsc::sync_channel(1);
             let id=request["id"].clone();
+            if request["method"]=="events" {
+                answer(id,Ok(json!(std::mem::take(&mut *EVENTS.lock().unwrap()))));continue;
+            }
+            if request["method"]=="picker_reply" {
+                let wanted=request["picker"].as_u64().unwrap_or(0);
+                let mut picks=PICKS.lock().unwrap();
+                if let Some(index)=picks.iter().position(|(id,_)|*id==wanted) {
+                    let (_,tx)=picks.remove(index);
+                    let paths=request["paths"].as_array().map(|paths|paths.iter().filter_map(Value::as_str).map(std::path::PathBuf::from).collect());
+                    let _=tx.send(paths);
+                }
+                answer(id,Ok(Value::Null));continue;
+            }
             let queued=slint::invoke_from_event_loop(move || {
                 let mut result=Err("UI not ready".to_string());
                 Shell::with(|shell,app| {
@@ -41,6 +69,7 @@ pub fn start() {
                             },
                             _ => return Err("unknown bridge method".into()),
                         }
+                        if request["method"]!="snapshot" {return Ok(Value::Null);}
                         let mut snapshot=generated::snapshot(&app);
                         let studio=shell.studio.borrow();
                         snapshot["__keybinds"]=json!(studio.prefs.keybinds);
@@ -48,17 +77,10 @@ pub fn start() {
                         Ok(snapshot)
                     })();
                 });
-                let _=tx.send(result);
+                answer(id,result);
             });
             if queued.is_err() {break;}
-            let response=match rx.recv() {
-                Ok(Ok(state))=>json!({"id":id,"result":state}),
-                Ok(Err(message))=>json!({"id":id,"error":message}),
-                Err(_)=>break,
-            };
-            let mut output=std::io::stdout().lock();
-            if writeln!(output,"{response}").is_err() {break;}
-            let _=output.flush();
+
         }
         let _=slint::quit_event_loop();
     });

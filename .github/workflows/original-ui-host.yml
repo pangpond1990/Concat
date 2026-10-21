@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [feat/original-ui-web]
-    paths: ['web/bridge/**', 'src/crates/concat/**', '.github/workflows/original-ui-host.yml']
+    paths: ['web/bridge/**', 'web/original/smoke.mjs', 'src/crates/concat/**', '.github/workflows/original-ui-host.yml']
 permissions:
   contents: read
 jobs:
@@ -37,6 +37,8 @@ jobs:
       - name: Build original app with browser transport
         working-directory: src
         run: cargo build -p concat --profile quick --features web-bridge
+      - name: Exercise original UI callbacks
+        run: node web/original/smoke.mjs src/target/quick/concat
       - name: Bundle native host
         run: |
           mkdir -p dist/lib dist/portable
