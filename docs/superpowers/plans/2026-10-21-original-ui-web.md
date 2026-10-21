@@ -20,16 +20,24 @@
 - Compilation or resource constraints must not be disguised as completion.
 
 ### Task 1: Validate original UI WebAssembly build
-- [ ] Inspect Slint exports and original synchronous helpers.
-- [ ] Create a WASM build entry that compiles the original UI sources directly.
-- [ ] Build and inspect start screen/new project dialog in browser.
+- [x] Inspect Slint exports and original synchronous helpers.
+- [x] Create a WASM build entry that compiles the original UI sources directly.
+- [x] Build and inspect start screen/new project dialog in browser.
 
 ### Task 2: Bind original logic
-- [ ] Generate typed state/callback bridge from Slint source interfaces.
-- [ ] Install localhost transport in native app behind a feature flag.
-- [ ] Reuse original pure helper code on the browser side.
-- [ ] Test a create/open/import/edit/export roundtrip using original callbacks.
+- [x] Generate typed state/callback bridge from Slint source interfaces.
+- [x] Install localhost transport in native app behind a feature flag.
+- [x] Reuse original pure helper code on the browser side.
+- [x] Test a create/open/import/edit/export roundtrip using original callbacks.
 
 ### Task 3: Deliver
 - [ ] Verify original UI in Chrome, including actual editing and playback.
-- [ ] Document build/run, limits and provenance; push changes to fork.
+- [x] Document build/run, limits and provenance; push changes to fork.
+
+## Final verification status
+
+Original UI editing and export were verified in Chrome. The final WASM event-loop
+wakeup fix (4d5e7ba, Actions run 39556526595) built successfully and is installed
+locally. Foreground playback after this last fix still requires visual validation:
+the browser automation connection timed out after the machine/session restarted.
+The localhost service and matching installed artifact hash were verified.
