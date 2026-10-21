@@ -1,0 +1,52 @@
+name: Original UI native host
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/original-ui-web]
+    paths: ['web/bridge/**', 'src/crates/concat/**', '.github/workflows/original-ui-host.yml']
+permissions:
+  contents: read
+jobs:
+  host:
+    runs-on: macos-14
+    env:
+      CARGO_PROFILE_QUICK_DEBUG: '0'
+      CARGO_INCREMENTAL: '0'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: '1.93.1'
+      - name: Native build dependencies
+        run: |
+          brew install ffmpeg cmake dylibbundler
+          echo "FFMPEG_DIR=$(brew --prefix ffmpeg)" >> "$GITHUB_ENV"
+          echo "RUSTFLAGS=-C link-arg=$(xcrun clang --print-file-name=libclang_rt.osx.a)" >> "$GITHUB_ENV"
+          scripts/ci/fetch.sh sherpa-onnx-osx-arm64-static-lib sherpa.tar.bz2
+          mkdir sherpa
+          tar -xjf sherpa.tar.bz2 -C sherpa
+          echo "SHERPA_ONNX_LIB_DIR=$(find "$PWD/sherpa" -type d -name lib | head -1)" >> "$GITHUB_ENV"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src
+          cache-on-failure: true
+      - name: Check generated UI contract
+        run: |
+          python3 web/bridge/generate.py
+          git diff --exit-code web/bridge/generated.rs web/bridge/schema.json
+      - name: Build original app with browser transport
+        working-directory: src
+        run: cargo build -p concat --profile quick --features web-bridge
+      - name: Bundle native host
+        run: |
+          mkdir -p dist/lib dist/portable
+          cp src/target/quick/concat dist/concat
+          dylibbundler -od -b -x dist/concat -d dist/lib -p @executable_path/lib/
+          codesign --force --sign - dist/lib/*.dylib
+          codesign --force --sign - dist/concat
+          tar -czf concat-browser-host-macos-arm64.tar.gz -C dist .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: concat-browser-host-macos-arm64
+          path: concat-browser-host-macos-arm64.tar.gz
+          retention-days: 7

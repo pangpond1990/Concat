@@ -1,0 +1,4868 @@
+{
+  "App": {
+    "props": [
+      [
+        "in",
+        "bool",
+        "on-start"
+      ],
+      [
+        "in",
+        "StartData",
+        "start"
+      ],
+      [
+        "in",
+        "[ChipOption]",
+        "start-aspects"
+      ],
+      [
+        "in",
+        "[ChipOption]",
+        "start-sizes"
+      ],
+      [
+        "in",
+        "[ChipOption]",
+        "start-rates"
+      ],
+      [
+        "in",
+        "[RecentProjectData]",
+        "recents"
+      ],
+      [
+        "in",
+        "int",
+        "recents-total"
+      ],
+      [
+        "in",
+        "string",
+        "app-version"
+      ],
+      [
+        "in",
+        "bool",
+        "can-drop"
+      ],
+      [
+        "in",
+        "string",
+        "project-name"
+      ],
+      [
+        "in",
+        "string",
+        "project-status"
+      ],
+      [
+        "in",
+        "bool",
+        "macos"
+      ],
+      [
+        "in",
+        "bool",
+        "phone"
+      ],
+      [
+        "in",
+        "int",
+        "open-menu"
+      ],
+      [
+        "in",
+        "[MenuItemData]",
+        "app-menu-items"
+      ],
+      [
+        "in",
+        "length",
+        "app-menu-height"
+      ],
+      [
+        "in",
+        "int",
+        "app-menu-token"
+      ],
+      [
+        "in",
+        "bool",
+        "own-window-buttons"
+      ],
+      [
+        "in-out",
+        "bool",
+        "window-maximized"
+      ],
+      [
+        "in",
+        "ExportData",
+        "export"
+      ],
+      [
+        "in",
+        "SettingsData",
+        "settings"
+      ],
+      [
+        "in",
+        "[ModelData]",
+        "transcribers"
+      ],
+      [
+        "in",
+        "[ModelData]",
+        "voices"
+      ],
+      [
+        "in",
+        "[string]",
+        "versions"
+      ],
+      [
+        "in",
+        "[string]",
+        "version-details"
+      ],
+      [
+        "in",
+        "[string]",
+        "languages"
+      ],
+      [
+        "in",
+        "[SystemFactData]",
+        "system-facts"
+      ],
+      [
+        "in",
+        "string",
+        "system-report"
+      ],
+      [
+        "in",
+        "ProjectSheetData",
+        "project-sheet"
+      ],
+      [
+        "in",
+        "CaptionsSheetData",
+        "captions"
+      ],
+      [
+        "in",
+        "[string]",
+        "caption-models"
+      ],
+      [
+        "in",
+        "SpeechSheetData",
+        "speech"
+      ],
+      [
+        "in",
+        "[string]",
+        "speech-models"
+      ],
+      [
+        "in",
+        "[string]",
+        "speech-model-details"
+      ],
+      [
+        "in",
+        "[string]",
+        "speech-voices"
+      ],
+      [
+        "in",
+        "[string]",
+        "speech-voice-details"
+      ],
+      [
+        "in",
+        "[AvatarData]",
+        "speech-voice-avatars"
+      ],
+      [
+        "in",
+        "[string]",
+        "speech-samples"
+      ],
+      [
+        "in",
+        "[string]",
+        "speech-sample-waves"
+      ],
+      [
+        "in",
+        "[string]",
+        "speech-sample-details"
+      ],
+      [
+        "in",
+        "VoiceoverData",
+        "voiceover"
+      ],
+      [
+        "in",
+        "[string]",
+        "voiceover-devices"
+      ],
+      [
+        "in",
+        "ToastData",
+        "toast"
+      ],
+      [
+        "out",
+        "bool",
+        "meter-watched"
+      ],
+      [
+        "out",
+        "bool",
+        "muted"
+      ],
+      [
+        "in",
+        "RelinkData",
+        "relink"
+      ],
+      [
+        "in",
+        "ConfirmData",
+        "confirm"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "start-compose",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-dismiss",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-name-edited",
+        "args": [
+          [
+            "name",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-location-edited",
+        "args": [
+          [
+            "path",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-browse",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-aspect-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-size-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-rate-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-custom-width-edited",
+        "args": [
+          [
+            "width",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-custom-height-edited",
+        "args": [
+          [
+            "height",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-custom-fps-edited",
+        "args": [
+          [
+            "fps",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-create",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-open",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-open-recent",
+        "args": [
+          [
+            "path",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-forget-recent",
+        "args": [
+          [
+            "path",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-reveal-recent",
+        "args": [
+          [
+            "path",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-search-edited",
+        "args": [
+          [
+            "query",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-sort-changed",
+        "args": [
+          [
+            "sort",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-link",
+        "args": [
+          [
+            "name",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "start-dismiss-error",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "menu-opened",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "app-menu-selected",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "titlebar-begin-drag",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "titlebar-toggle-maximize",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "titlebar-minimize",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "titlebar-close",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "window-resized",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-closed",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-name-edited",
+        "args": [
+          [
+            "name",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-browse",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-rate-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-codec-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-ten-bit-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-hdr-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-bitrate-changed",
+        "args": [
+          [
+            "mbps",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-start",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-cancel",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-reveal",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-again",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-closed",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-page-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-show-log",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-language-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-log-level-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-theme-changed",
+        "args": [
+          [
+            "dark",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-accent-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-accent-custom-changed",
+        "args": [
+          [
+            "colour",
+            "color"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-playhead-changed",
+        "args": [
+          [
+            "colour",
+            "color"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-playhead-reset",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-scale-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-playhead-stops-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-proxies-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-gpu-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-magnetic-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-download-source-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-download-base-edited",
+        "args": [
+          [
+            "text",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-server-enabled-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-server-host-edited",
+        "args": [
+          [
+            "text",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-server-port-edited",
+        "args": [
+          [
+            "port",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-server-token-edited",
+        "args": [
+          [
+            "text",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-server-token-generated",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-check-updates",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-version-chosen",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-install-version",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-install-cancel",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-shortcut-capture",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-shortcut-reset",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "settings-shortcut-reset-all",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "model-activated",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "model-download",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "model-cancel",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "model-remove",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "open-settings",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "export-clicked",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "project-closed",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "project-name-edited",
+        "args": [
+          [
+            "name",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "project-size-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "project-rate-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "project-custom-width-edited",
+        "args": [
+          [
+            "width",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "project-custom-height-edited",
+        "args": [
+          [
+            "height",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "project-custom-fps-edited",
+        "args": [
+          [
+            "fps",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "project-color-space-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "project-apply",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions-closed",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions-voice-toggled",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions-source-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions-text-edited",
+        "args": [
+          [
+            "text",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions-model-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions-placement-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions-size-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions-begin",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions-cancel",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions-import-srt",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions-export-srt",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-closed",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-text-edited",
+        "args": [
+          [
+            "text",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-voice-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-model-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-speed-changed",
+        "args": [
+          [
+            "value",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-quality-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-pauses-changed",
+        "args": [
+          [
+            "value",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-reference-start-changed",
+        "args": [
+          [
+            "seconds",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-use-sample-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-sample-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-insert-tag",
+        "args": [
+          [
+            "text",
+            "string"
+          ],
+          [
+            "tag",
+            "string"
+          ],
+          [
+            "at",
+            "int"
+          ]
+        ],
+        "returns": "string",
+        "pure": true
+      },
+      {
+        "name": "speech-begin",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-cancel",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-save-name-edited",
+        "args": [
+          [
+            "name",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-pick-picture",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-save-voice",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speech-clear-style",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "voiceover-closed",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "voiceover-action",
+        "args": [
+          [
+            "verb",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "voiceover-device-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "voiceover-countdown-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "voiceover-mute-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "voiceover-gain-changed",
+        "args": [
+          [
+            "db",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "voiceover-prompt-edited",
+        "args": [
+          [
+            "text",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "voiceover-prompt-speed-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "meter-watched-changed",
+        "args": [
+          [
+            "watched",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "relink-all",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "relink-dismiss",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "confirm-accepted",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "confirm-dismissed",
+        "args": [],
+        "returns": null,
+        "pure": false
+      }
+    ]
+  },
+  "Theme": {
+    "props": [
+      [
+        "in-out",
+        "bool",
+        "dark"
+      ],
+      [
+        "in-out",
+        "int",
+        "accent-choice"
+      ],
+      [
+        "in-out",
+        "color",
+        "accent-custom"
+      ],
+      [
+        "out",
+        "bool",
+        "accent-is-custom"
+      ],
+      [
+        "out",
+        "[string]",
+        "accent-names"
+      ],
+      [
+        "in-out",
+        "color",
+        "playhead-custom"
+      ],
+      [
+        "in-out",
+        "bool",
+        "playhead-is-custom"
+      ],
+      [
+        "in-out",
+        "int",
+        "ui-scale"
+      ],
+      [
+        "out",
+        "string",
+        "font"
+      ],
+      [
+        "out",
+        "string",
+        "font-technical"
+      ],
+      [
+        "out",
+        "length",
+        "fs-xs"
+      ],
+      [
+        "out",
+        "length",
+        "fs-sm"
+      ],
+      [
+        "out",
+        "length",
+        "fs"
+      ],
+      [
+        "out",
+        "length",
+        "fs-lg"
+      ],
+      [
+        "out",
+        "length",
+        "fs-xl"
+      ],
+      [
+        "out",
+        "length",
+        "fs-input"
+      ],
+      [
+        "out",
+        "length",
+        "fs-display"
+      ],
+      [
+        "out",
+        "int",
+        "weight-body"
+      ],
+      [
+        "out",
+        "int",
+        "weight-title"
+      ],
+      [
+        "out",
+        "int",
+        "weight-display"
+      ],
+      [
+        "out",
+        "length",
+        "r-xs"
+      ],
+      [
+        "out",
+        "length",
+        "r-sm"
+      ],
+      [
+        "out",
+        "length",
+        "r"
+      ],
+      [
+        "out",
+        "length",
+        "r-lg"
+      ],
+      [
+        "out",
+        "length",
+        "r-xl"
+      ],
+      [
+        "out",
+        "length",
+        "h"
+      ],
+      [
+        "out",
+        "length",
+        "gap"
+      ],
+      [
+        "out",
+        "length",
+        "pad"
+      ],
+      [
+        "out",
+        "length",
+        "label-w"
+      ],
+      [
+        "out",
+        "color",
+        "panel"
+      ],
+      [
+        "out",
+        "color",
+        "raised"
+      ],
+      [
+        "out",
+        "color",
+        "well"
+      ],
+      [
+        "out",
+        "color",
+        "field"
+      ],
+      [
+        "out",
+        "color",
+        "field-hover"
+      ],
+      [
+        "out",
+        "color",
+        "field-active"
+      ],
+      [
+        "out",
+        "color",
+        "launch-page"
+      ],
+      [
+        "out",
+        "color",
+        "launch-panel"
+      ],
+      [
+        "out",
+        "color",
+        "launch-well"
+      ],
+      [
+        "out",
+        "color",
+        "launch-raised"
+      ],
+      [
+        "out",
+        "color",
+        "launch-field"
+      ],
+      [
+        "out",
+        "color",
+        "launch-field-active"
+      ],
+      [
+        "out",
+        "color",
+        "line"
+      ],
+      [
+        "out",
+        "color",
+        "line-strong"
+      ],
+      [
+        "out",
+        "color",
+        "fg"
+      ],
+      [
+        "out",
+        "color",
+        "fg-muted"
+      ],
+      [
+        "out",
+        "color",
+        "fg-dim"
+      ],
+      [
+        "out",
+        "color",
+        "fg-hot"
+      ],
+      [
+        "out",
+        "float",
+        "custom-light"
+      ],
+      [
+        "out",
+        "Accent",
+        "custom-tone"
+      ],
+      [
+        "out",
+        "Accent",
+        "tone"
+      ],
+      [
+        "out",
+        "color",
+        "accent"
+      ],
+      [
+        "out",
+        "color",
+        "accent-hover"
+      ],
+      [
+        "out",
+        "color",
+        "accent-soft"
+      ],
+      [
+        "out",
+        "color",
+        "on-accent"
+      ],
+      [
+        "out",
+        "color",
+        "green"
+      ],
+      [
+        "out",
+        "color",
+        "on-green"
+      ],
+      [
+        "out",
+        "color",
+        "grip"
+      ],
+      [
+        "out",
+        "color",
+        "grip-active"
+      ],
+      [
+        "out",
+        "color",
+        "grip-edge"
+      ],
+      [
+        "out",
+        "color",
+        "meter-low"
+      ],
+      [
+        "out",
+        "color",
+        "meter-mid"
+      ],
+      [
+        "out",
+        "color",
+        "meter-high"
+      ],
+      [
+        "out",
+        "color",
+        "kind-video"
+      ],
+      [
+        "out",
+        "color",
+        "kind-video-well"
+      ],
+      [
+        "out",
+        "color",
+        "kind-audio"
+      ],
+      [
+        "out",
+        "color",
+        "kind-audio-well"
+      ],
+      [
+        "out",
+        "color",
+        "kind-image"
+      ],
+      [
+        "out",
+        "color",
+        "kind-image-well"
+      ],
+      [
+        "out",
+        "color",
+        "kind-text"
+      ],
+      [
+        "out",
+        "color",
+        "kind-text-well"
+      ],
+      [
+        "out",
+        "color",
+        "kind-filter"
+      ],
+      [
+        "out",
+        "color",
+        "kind-filter-well"
+      ],
+      [
+        "out",
+        "color",
+        "kind-shape"
+      ],
+      [
+        "out",
+        "color",
+        "kind-shape-well"
+      ],
+      [
+        "out",
+        "color",
+        "lane"
+      ],
+      [
+        "out",
+        "color",
+        "lane-alt"
+      ],
+      [
+        "out",
+        "color",
+        "ruler"
+      ],
+      [
+        "out",
+        "color",
+        "grid"
+      ],
+      [
+        "out",
+        "color",
+        "playhead-default"
+      ],
+      [
+        "out",
+        "color",
+        "playhead"
+      ],
+      [
+        "out",
+        "color",
+        "wave"
+      ],
+      [
+        "out",
+        "color",
+        "wave-video"
+      ],
+      [
+        "out",
+        "color",
+        "wave-hot"
+      ],
+      [
+        "out",
+        "float",
+        "wave-hot-line"
+      ],
+      [
+        "out",
+        "color",
+        "clip-ink"
+      ],
+      [
+        "out",
+        "color",
+        "clip-body"
+      ],
+      [
+        "out",
+        "color",
+        "clip-chip"
+      ],
+      [
+        "out",
+        "color",
+        "wave-centre"
+      ],
+      [
+        "out",
+        "color",
+        "fade-shade"
+      ],
+      [
+        "out",
+        "color",
+        "fade-edge"
+      ],
+      [
+        "out",
+        "color",
+        "transition-in"
+      ],
+      [
+        "out",
+        "color",
+        "transition-out"
+      ],
+      [
+        "out",
+        "color",
+        "stage"
+      ],
+      [
+        "out",
+        "color",
+        "sample-ground"
+      ],
+      [
+        "out",
+        "color",
+        "on-stage-dim"
+      ],
+      [
+        "out",
+        "color",
+        "overlay"
+      ],
+      [
+        "out",
+        "color",
+        "scrim"
+      ],
+      [
+        "out",
+        "color",
+        "on-scrim"
+      ],
+      [
+        "out",
+        "color",
+        "danger"
+      ],
+      [
+        "out",
+        "color",
+        "danger-soft"
+      ],
+      [
+        "out",
+        "color",
+        "danger-wash"
+      ],
+      [
+        "out",
+        "color",
+        "danger-edge"
+      ],
+      [
+        "out",
+        "color",
+        "page"
+      ],
+      [
+        "out",
+        "color",
+        "page-fg-muted"
+      ],
+      [
+        "out",
+        "[color]",
+        "swatches"
+      ],
+      [
+        "out",
+        "color",
+        "plate-on"
+      ]
+    ],
+    "callbacks": []
+  },
+  "Editor": {
+    "props": [
+      [
+        "in-out",
+        "[SeatBox]",
+        "seats"
+      ],
+      [
+        "in-out",
+        "[DockDivider]",
+        "dividers"
+      ],
+      [
+        "in-out",
+        "[MediaItemData]",
+        "media"
+      ],
+      [
+        "in-out",
+        "int",
+        "media-count-all"
+      ],
+      [
+        "in-out",
+        "int",
+        "media-count-video"
+      ],
+      [
+        "in-out",
+        "int",
+        "media-count-audio"
+      ],
+      [
+        "in-out",
+        "int",
+        "media-count-images"
+      ],
+      [
+        "in-out",
+        "int",
+        "media-count-speech"
+      ],
+      [
+        "in-out",
+        "int",
+        "media-count-processed"
+      ],
+      [
+        "in-out",
+        "int",
+        "media-selected-count"
+      ],
+      [
+        "in-out",
+        "bool",
+        "importing"
+      ],
+      [
+        "in-out",
+        "MediaFilter",
+        "media-filter"
+      ],
+      [
+        "in-out",
+        "int",
+        "media-jump-token"
+      ],
+      [
+        "in-out",
+        "[TextPresetData]",
+        "text-presets"
+      ],
+      [
+        "in-out",
+        "[TextPresetData]",
+        "style-presets"
+      ],
+      [
+        "in-out",
+        "[TextPresetData]",
+        "language-presets"
+      ],
+      [
+        "in-out",
+        "string",
+        "library-audition"
+      ],
+      [
+        "in-out",
+        "SelectedClipData",
+        "selected-clip"
+      ],
+      [
+        "in-out",
+        "SelectedTransitionData",
+        "selected-transition"
+      ],
+      [
+        "in-out",
+        "[string]",
+        "audio-tracks"
+      ],
+      [
+        "in-out",
+        "[string]",
+        "font-families"
+      ],
+      [
+        "in-out",
+        "[CatalogueEntryData]",
+        "catalogue-effects"
+      ],
+      [
+        "in-out",
+        "[CatalogueEntryData]",
+        "catalogue-filters"
+      ],
+      [
+        "in-out",
+        "[CatalogueEntryData]",
+        "catalogue-luts"
+      ],
+      [
+        "in-out",
+        "image",
+        "adjustment-art"
+      ],
+      [
+        "in-out",
+        "[CatalogueEntryData]",
+        "catalogue-audio"
+      ],
+      [
+        "in-out",
+        "[CatalogueEntryData]",
+        "catalogue-transitions"
+      ],
+      [
+        "in-out",
+        "[string]",
+        "effect-groups"
+      ],
+      [
+        "in-out",
+        "[string]",
+        "filter-groups"
+      ],
+      [
+        "in-out",
+        "[string]",
+        "audio-groups"
+      ],
+      [
+        "in-out",
+        "[string]",
+        "transition-groups"
+      ],
+      [
+        "in-out",
+        "[AppliedEntryData]",
+        "applied-visual"
+      ],
+      [
+        "in-out",
+        "[AppliedEntryData]",
+        "applied-audio"
+      ],
+      [
+        "in-out",
+        "[AppliedParamData]",
+        "visual-params"
+      ],
+      [
+        "in-out",
+        "[AppliedParamData]",
+        "transition-knobs"
+      ],
+      [
+        "in-out",
+        "[TransitionChoiceData]",
+        "transition-choices"
+      ],
+      [
+        "in-out",
+        "[AppliedParamData]",
+        "audio-params"
+      ],
+      [
+        "in-out",
+        "[AppliedParamData]",
+        "adjust-params"
+      ],
+      [
+        "in-out",
+        "[WheelData]",
+        "adjust-wheels"
+      ],
+      [
+        "in-out",
+        "[CurveData]",
+        "adjust-curves"
+      ],
+      [
+        "in-out",
+        "[WheelGroupData]",
+        "visual-wheels"
+      ],
+      [
+        "in-out",
+        "[CurveGroupData]",
+        "visual-curves"
+      ],
+      [
+        "in-out",
+        "[ColourKnobData]",
+        "visual-colours"
+      ],
+      [
+        "in-out",
+        "int",
+        "inspector-jump-token"
+      ],
+      [
+        "in-out",
+        "string",
+        "inspector-jump-tab"
+      ],
+      [
+        "in-out",
+        "string",
+        "inspector-jump-section"
+      ],
+      [
+        "in-out",
+        "[EffectData]",
+        "video-effects"
+      ],
+      [
+        "in-out",
+        "[EffectData]",
+        "audio-effects"
+      ],
+      [
+        "in-out",
+        "float",
+        "level"
+      ],
+      [
+        "in-out",
+        "float",
+        "peak"
+      ],
+      [
+        "in-out",
+        "int",
+        "output-width"
+      ],
+      [
+        "in-out",
+        "int",
+        "output-height"
+      ],
+      [
+        "in-out",
+        "int",
+        "ratio-index"
+      ],
+      [
+        "in-out",
+        "int",
+        "quality-index"
+      ],
+      [
+        "in-out",
+        "bool",
+        "playing"
+      ],
+      [
+        "in-out",
+        "bool",
+        "has-picture"
+      ],
+      [
+        "in-out",
+        "string",
+        "preview-clip-name"
+      ],
+      [
+        "in-out",
+        "float",
+        "preview-duration"
+      ],
+      [
+        "in-out",
+        "bool",
+        "playhead-free"
+      ],
+      [
+        "in-out",
+        "image",
+        "preview-frame"
+      ],
+      [
+        "in-out",
+        "[StageItemData]",
+        "stage-items"
+      ],
+      [
+        "in-out",
+        "[StageGuideData]",
+        "stage-guides"
+      ],
+      [
+        "in-out",
+        "int",
+        "brush-tool"
+      ],
+      [
+        "in-out",
+        "float",
+        "brush-size"
+      ],
+      [
+        "in-out",
+        "bool",
+        "painting"
+      ],
+      [
+        "in-out",
+        "string",
+        "stroke-path"
+      ],
+      [
+        "in-out",
+        "float",
+        "stroke-width"
+      ],
+      [
+        "in-out",
+        "bool",
+        "stroke-erase"
+      ],
+      [
+        "in-out",
+        "[TimelineTabData]",
+        "timeline-tabs"
+      ],
+      [
+        "in-out",
+        "int",
+        "timeline-current-tab"
+      ],
+      [
+        "in-out",
+        "[TrackData]",
+        "tracks"
+      ],
+      [
+        "in-out",
+        "[ClipData]",
+        "clips"
+      ],
+      [
+        "in-out",
+        "TimelineTool",
+        "tool"
+      ],
+      [
+        "in-out",
+        "bool",
+        "snap"
+      ],
+      [
+        "in-out",
+        "bool",
+        "magnetic"
+      ],
+      [
+        "in-out",
+        "bool",
+        "pan-mode"
+      ],
+      [
+        "in-out",
+        "bool",
+        "trim-follow"
+      ],
+      [
+        "in-out",
+        "bool",
+        "meters-shown"
+      ],
+      [
+        "in-out",
+        "bool",
+        "preview-axis"
+      ],
+      [
+        "in-out",
+        "bool",
+        "preview-axis-audio"
+      ],
+      [
+        "in-out",
+        "int",
+        "selected-count"
+      ],
+      [
+        "in-out",
+        "bool",
+        "can-undo"
+      ],
+      [
+        "in-out",
+        "bool",
+        "can-redo"
+      ],
+      [
+        "in-out",
+        "string",
+        "merge-blocked-because"
+      ],
+      [
+        "in-out",
+        "string",
+        "merge-label"
+      ],
+      [
+        "in-out",
+        "bool",
+        "sound-selected"
+      ],
+      [
+        "in-out",
+        "bool",
+        "title-selected"
+      ],
+      [
+        "in-out",
+        "bool",
+        "picture-selected"
+      ],
+      [
+        "in-out",
+        "bool",
+        "freezable"
+      ],
+      [
+        "in-out",
+        "bool",
+        "reversible"
+      ],
+      [
+        "in-out",
+        "float",
+        "playhead"
+      ],
+      [
+        "in-out",
+        "[float]",
+        "key-marks"
+      ],
+      [
+        "in-out",
+        "float",
+        "frame-rate"
+      ],
+      [
+        "in-out",
+        "float",
+        "scroll-left"
+      ],
+      [
+        "in-out",
+        "float",
+        "seconds-per-pixel"
+      ],
+      [
+        "in-out",
+        "float",
+        "duration-seconds"
+      ],
+      [
+        "in-out",
+        "bool",
+        "recording"
+      ],
+      [
+        "in-out",
+        "bool",
+        "captions-open"
+      ],
+      [
+        "in-out",
+        "bool",
+        "speech-open"
+      ],
+      [
+        "in-out",
+        "bool",
+        "voiceover-open"
+      ],
+      [
+        "in-out",
+        "float",
+        "record-level"
+      ],
+      [
+        "in-out",
+        "float",
+        "record-rms"
+      ],
+      [
+        "in-out",
+        "bool",
+        "record-clipped"
+      ],
+      [
+        "in-out",
+        "float",
+        "record-seconds"
+      ],
+      [
+        "in-out",
+        "bool",
+        "record-silent"
+      ],
+      [
+        "in-out",
+        "[MenuItemData]",
+        "menu-items"
+      ],
+      [
+        "in-out",
+        "length",
+        "menu-height"
+      ],
+      [
+        "in-out",
+        "int",
+        "menu-token"
+      ],
+      [
+        "in-out",
+        "DropData",
+        "drop"
+      ],
+      [
+        "in-out",
+        "string",
+        "project-name"
+      ],
+      [
+        "in-out",
+        "string",
+        "project-folder"
+      ],
+      [
+        "in-out",
+        "string",
+        "timeline-name"
+      ],
+      [
+        "in-out",
+        "string",
+        "project-output"
+      ],
+      [
+        "in-out",
+        "string",
+        "project-rate"
+      ],
+      [
+        "in-out",
+        "string",
+        "project-duration"
+      ],
+      [
+        "in-out",
+        "int",
+        "count-media"
+      ],
+      [
+        "in-out",
+        "int",
+        "count-tracks"
+      ],
+      [
+        "in-out",
+        "int",
+        "count-clips"
+      ],
+      [
+        "in-out",
+        "string",
+        "keys-undo"
+      ],
+      [
+        "in-out",
+        "string",
+        "keys-redo"
+      ],
+      [
+        "in-out",
+        "string",
+        "keys-split"
+      ],
+      [
+        "in-out",
+        "string",
+        "keys-split-tool"
+      ],
+      [
+        "in-out",
+        "string",
+        "keys-delete-left"
+      ],
+      [
+        "in-out",
+        "string",
+        "keys-delete-right"
+      ],
+      [
+        "in-out",
+        "string",
+        "keys-pan"
+      ],
+      [
+        "in-out",
+        "string",
+        "keys-preview-axis"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "workspace-resized",
+        "args": [
+          [
+            "width",
+            "length"
+          ],
+          [
+            "height",
+            "length"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "dock-set",
+        "args": [
+          [
+            "seat",
+            "int"
+          ],
+          [
+            "kind",
+            "PaneKind"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "dock-add",
+        "args": [
+          [
+            "kind",
+            "PaneKind"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "dock-remove",
+        "args": [
+          [
+            "seat",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "dock-dropped",
+        "args": [
+          [
+            "from",
+            "int"
+          ],
+          [
+            "onto",
+            "int"
+          ],
+          [
+            "side",
+            "DockSide"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "divider-pressed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "divider-dragged",
+        "args": [
+          [
+            "index",
+            "int"
+          ],
+          [
+            "delta",
+            "length"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "import-media",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "media-filter-changed",
+        "args": [
+          [
+            "filter",
+            "MediaFilter"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "media-sort-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "media-select",
+        "args": [
+          [
+            "id",
+            "int"
+          ],
+          [
+            "additive",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "media-band-selected",
+        "args": [
+          [
+            "columns",
+            "int"
+          ],
+          [
+            "from-col",
+            "int"
+          ],
+          [
+            "to-col",
+            "int"
+          ],
+          [
+            "from-row",
+            "int"
+          ],
+          [
+            "to-row",
+            "int"
+          ],
+          [
+            "additive",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "media-remove",
+        "args": [
+          [
+            "id",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "media-remove-selected",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "media-activate",
+        "args": [
+          [
+            "id",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "media-context",
+        "args": [
+          [
+            "id",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-add-text",
+        "args": [
+          [
+            "preset",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-add-shape",
+        "args": [
+          [
+            "shape",
+            "string"
+          ],
+          [
+            "label",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-apply-effect",
+        "args": [
+          [
+            "effect-id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-apply-transition",
+        "args": [
+          [
+            "transition-id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-apply-filter",
+        "args": [
+          [
+            "filter-id",
+            "string"
+          ],
+          [
+            "label",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-audition-filter",
+        "args": [
+          [
+            "filter-id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-apply-audio",
+        "args": [
+          [
+            "effect-id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-save-template",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-import-lut",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-add-adjustment",
+        "args": [
+          [
+            "label",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-apply-lut",
+        "args": [
+          [
+            "lut-id",
+            "string"
+          ],
+          [
+            "label",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "library-reload-packages",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-set",
+        "args": [
+          [
+            "field",
+            "ClipField"
+          ],
+          [
+            "value",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-set-text",
+        "args": [
+          [
+            "field",
+            "ClipTextField"
+          ],
+          [
+            "value",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-set-colour",
+        "args": [
+          [
+            "field",
+            "ClipTextField"
+          ],
+          [
+            "value",
+            "color"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-commit",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "import-font",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "text-style-default",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "adjust-set",
+        "args": [
+          [
+            "key",
+            "string"
+          ],
+          [
+            "value",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "chain-set-colour",
+        "args": [
+          [
+            "index",
+            "int"
+          ],
+          [
+            "key",
+            "string"
+          ],
+          [
+            "value",
+            "color"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "curve-point",
+        "args": [
+          [
+            "entry",
+            "int"
+          ],
+          [
+            "key",
+            "string"
+          ],
+          [
+            "point",
+            "int"
+          ],
+          [
+            "x",
+            "float"
+          ],
+          [
+            "y",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "curve-remove",
+        "args": [
+          [
+            "entry",
+            "int"
+          ],
+          [
+            "key",
+            "string"
+          ],
+          [
+            "point",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "chain-add",
+        "args": [
+          [
+            "audio",
+            "bool"
+          ],
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "chain-toggle",
+        "args": [
+          [
+            "audio",
+            "bool"
+          ],
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "chain-move-by",
+        "args": [
+          [
+            "audio",
+            "bool"
+          ],
+          [
+            "index",
+            "int"
+          ],
+          [
+            "delta",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "chain-remove",
+        "args": [
+          [
+            "audio",
+            "bool"
+          ],
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "chain-set-param",
+        "args": [
+          [
+            "audio",
+            "bool"
+          ],
+          [
+            "index",
+            "int"
+          ],
+          [
+            "key",
+            "string"
+          ],
+          [
+            "value",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "add-effect",
+        "args": [
+          [
+            "audio",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "remove-effect",
+        "args": [
+          [
+            "id",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "play-toggled",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "seek",
+        "args": [
+          [
+            "seconds",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "step-frames",
+        "args": [
+          [
+            "frames",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "ratio-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "quality-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "stage-pressed",
+        "args": [
+          [
+            "x",
+            "float"
+          ],
+          [
+            "y",
+            "float"
+          ],
+          [
+            "additive",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "stage-grip-pressed",
+        "args": [
+          [
+            "id",
+            "string"
+          ],
+          [
+            "grip",
+            "int"
+          ],
+          [
+            "x",
+            "float"
+          ],
+          [
+            "y",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "stage-dragged",
+        "args": [
+          [
+            "x",
+            "float"
+          ],
+          [
+            "y",
+            "float"
+          ],
+          [
+            "snap",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "stage-released",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "cutout-mode",
+        "args": [
+          [
+            "mode",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "cutout-tool",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "cutout-size",
+        "args": [
+          [
+            "size",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "cutout-painting",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "cutout-subject",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "cutout-clear",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-enhance-set",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-enhance-size",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-enhance-strength",
+        "args": [
+          [
+            "strength",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-enhance-preview",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-enhance-run",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "transition-remove",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "transition-duration-set",
+        "args": [
+          [
+            "seconds",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "transition-param-set",
+        "args": [
+          [
+            "key",
+            "string"
+          ],
+          [
+            "value",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "tab-selected",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "tab-renamed",
+        "args": [
+          [
+            "index",
+            "int"
+          ],
+          [
+            "name",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "tab-close-requested",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "tab-added",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "tool-changed",
+        "args": [
+          [
+            "tool",
+            "TimelineTool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "snap-changed",
+        "args": [
+          [
+            "snap",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "magnetic-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "pan-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "trim-follow-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "meters-shown-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "preview-axis-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "preview-axis-audio-changed",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "hovered",
+        "args": [
+          [
+            "seconds",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "hover-ended",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "undo",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "redo",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "split",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "merge",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "delete-selected",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "captions",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "speak",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "record-voiceover",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "add-track",
+        "args": [
+          [
+            "bottom",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "zoom-to-fit",
+        "args": [
+          [
+            "width",
+            "length"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "zoom",
+        "args": [
+          [
+            "factor",
+            "float"
+          ],
+          [
+            "anchor-seconds",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "lanes-resized",
+        "args": [
+          [
+            "width",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "scrubbed",
+        "args": [
+          [
+            "seconds",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "finger-held",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "finger-lifted",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "key-mark-moved",
+        "args": [
+          [
+            "from",
+            "float"
+          ],
+          [
+            "to",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-pressed",
+        "args": [
+          [
+            "id",
+            "string"
+          ],
+          [
+            "additive",
+            "bool"
+          ],
+          [
+            "edge",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "save-frame",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-split",
+        "args": [
+          [
+            "id",
+            "string"
+          ],
+          [
+            "seconds",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-volume",
+        "args": [
+          [
+            "id",
+            "string"
+          ],
+          [
+            "gain",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-dragged",
+        "args": [
+          [
+            "seconds",
+            "float"
+          ],
+          [
+            "pixels",
+            "length"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-released",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clip-context",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "menu-selected",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "band-selected",
+        "args": [
+          [
+            "from-seconds",
+            "float"
+          ],
+          [
+            "to-seconds",
+            "float"
+          ],
+          [
+            "from-y",
+            "length"
+          ],
+          [
+            "to-y",
+            "length"
+          ],
+          [
+            "additive",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "scrolled",
+        "args": [
+          [
+            "seconds",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "drag-hovered",
+        "args": [
+          [
+            "payload",
+            "string"
+          ],
+          [
+            "seconds",
+            "float"
+          ],
+          [
+            "y",
+            "length"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "dropped",
+        "args": [
+          [
+            "payload",
+            "string"
+          ],
+          [
+            "seconds",
+            "float"
+          ],
+          [
+            "y",
+            "length"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "track-flag-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ],
+          [
+            "visible",
+            "bool"
+          ],
+          [
+            "muted",
+            "bool"
+          ],
+          [
+            "locked",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "track-sized",
+        "args": [
+          [
+            "index",
+            "int"
+          ],
+          [
+            "size",
+            "TrackSize"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "track-removed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "tab-moved",
+        "args": [
+          [
+            "from",
+            "int"
+          ],
+          [
+            "to",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "modify-project",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "blur",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "shortcut",
+        "args": [
+          [
+            "action",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "key-chord",
+        "args": [
+          [
+            "text",
+            "string"
+          ],
+          [
+            "shift",
+            "bool"
+          ],
+          [
+            "alt",
+            "bool"
+          ],
+          [
+            "control",
+            "bool"
+          ],
+          [
+            "meta",
+            "bool"
+          ],
+          [
+            "on-start",
+            "bool"
+          ]
+        ],
+        "returns": "bool",
+        "pure": false
+      }
+    ]
+  },
+  "I18n": {
+    "props": [
+      [
+        "in-out",
+        "string",
+        "lang"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "lookup",
+        "args": [
+          [
+            "lang",
+            "string"
+          ],
+          [
+            "key",
+            "string"
+          ]
+        ],
+        "returns": "string",
+        "pure": true
+      },
+      {
+        "name": "lookup1",
+        "args": [
+          [
+            "lang",
+            "string"
+          ],
+          [
+            "key",
+            "string"
+          ],
+          [
+            "a",
+            "string"
+          ]
+        ],
+        "returns": "string",
+        "pure": true
+      },
+      {
+        "name": "lookup2",
+        "args": [
+          [
+            "lang",
+            "string"
+          ],
+          [
+            "key",
+            "string"
+          ],
+          [
+            "a",
+            "string"
+          ],
+          [
+            "b",
+            "string"
+          ]
+        ],
+        "returns": "string",
+        "pure": true
+      },
+      {
+        "name": "lookup-upper",
+        "args": [
+          [
+            "lang",
+            "string"
+          ],
+          [
+            "key",
+            "string"
+          ]
+        ],
+        "returns": "string",
+        "pure": true
+      }
+    ]
+  },
+  "Library": {
+    "props": [
+      [
+        "in",
+        "[LibraryViewData]",
+        "views"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "query-changed",
+        "args": [
+          [
+            "shelf",
+            "int"
+          ],
+          [
+            "text",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "group-changed",
+        "args": [
+          [
+            "shelf",
+            "int"
+          ],
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "favourites-changed",
+        "args": [
+          [
+            "shelf",
+            "int"
+          ],
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "category-changed",
+        "args": [
+          [
+            "shelf",
+            "int"
+          ],
+          [
+            "category",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "favourite",
+        "args": [
+          [
+            "id",
+            "string"
+          ],
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      }
+    ]
+  },
+  "FontSearch": {
+    "props": [
+      [
+        "in",
+        "[string]",
+        "matches"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "query-changed",
+        "args": [
+          [
+            "text",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      }
+    ]
+  },
+  "Meters": {
+    "props": [
+      [
+        "in",
+        "float",
+        "left"
+      ],
+      [
+        "in",
+        "float",
+        "right"
+      ],
+      [
+        "in",
+        "float",
+        "hold-left"
+      ],
+      [
+        "in",
+        "float",
+        "hold-right"
+      ],
+      [
+        "in",
+        "bool",
+        "clipped"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "clip-cleared",
+        "args": [],
+        "returns": null,
+        "pure": false
+      }
+    ]
+  },
+  "SourcePreview": {
+    "props": [
+      [
+        "in",
+        "bool",
+        "open"
+      ],
+      [
+        "in",
+        "string",
+        "name"
+      ],
+      [
+        "in",
+        "int",
+        "row"
+      ],
+      [
+        "in",
+        "string",
+        "card"
+      ],
+      [
+        "in",
+        "float",
+        "time"
+      ],
+      [
+        "in",
+        "float",
+        "duration"
+      ],
+      [
+        "in",
+        "float",
+        "progress"
+      ],
+      [
+        "in",
+        "bool",
+        "playing"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "closed",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "seek",
+        "args": [
+          [
+            "seconds",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      }
+    ]
+  },
+  "Backdrop": {
+    "props": [
+      [
+        "in",
+        "BackdropData",
+        "timeline"
+      ],
+      [
+        "in",
+        "BackdropData",
+        "clip"
+      ],
+      [
+        "in",
+        "bool",
+        "clip-has"
+      ],
+      [
+        "in",
+        "bool",
+        "can-frame"
+      ],
+      [
+        "in",
+        "[string]",
+        "stills"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "set-mode",
+        "args": [
+          [
+            "clip",
+            "bool"
+          ],
+          [
+            "mode",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "set-amount",
+        "args": [
+          [
+            "clip",
+            "bool"
+          ],
+          [
+            "amount",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "set-colour",
+        "args": [
+          [
+            "clip",
+            "bool"
+          ],
+          [
+            "colour",
+            "color"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "set-still",
+        "args": [
+          [
+            "clip",
+            "bool"
+          ],
+          [
+            "row",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "apply-to-all",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "frame",
+        "args": [
+          [
+            "fill",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      }
+    ]
+  },
+  "Keyframes": {
+    "props": [
+      [
+        "in",
+        "[ClipKeyData]",
+        "rows"
+      ],
+      [
+        "in",
+        "bool",
+        "available"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "toggle",
+        "args": [
+          [
+            "field",
+            "ClipField"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "step",
+        "args": [
+          [
+            "field",
+            "ClipField"
+          ],
+          [
+            "delta",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clear",
+        "args": [
+          [
+            "field",
+            "ClipField"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "toggle-param",
+        "args": [
+          [
+            "key",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "step-param",
+        "args": [
+          [
+            "key",
+            "string"
+          ],
+          [
+            "delta",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clear-param",
+        "args": [
+          [
+            "key",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      }
+    ]
+  },
+  "KeyEditor": {
+    "props": [
+      [
+        "in",
+        "[KeyRowData]",
+        "rows"
+      ],
+      [
+        "in",
+        "float",
+        "at"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "jump",
+        "args": [
+          [
+            "at",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "move-key",
+        "args": [
+          [
+            "field",
+            "ClipField"
+          ],
+          [
+            "param",
+            "string"
+          ],
+          [
+            "from",
+            "float"
+          ],
+          [
+            "to",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "drag-key",
+        "args": [
+          [
+            "field",
+            "ClipField"
+          ],
+          [
+            "param",
+            "string"
+          ],
+          [
+            "from",
+            "float"
+          ],
+          [
+            "to",
+            "float"
+          ],
+          [
+            "value",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "set-ease",
+        "args": [
+          [
+            "field",
+            "ClipField"
+          ],
+          [
+            "param",
+            "string"
+          ],
+          [
+            "at",
+            "float"
+          ],
+          [
+            "x1",
+            "float"
+          ],
+          [
+            "y1",
+            "float"
+          ],
+          [
+            "x2",
+            "float"
+          ],
+          [
+            "y2",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "step-all",
+        "args": [
+          [
+            "delta",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "clear-all",
+        "args": [],
+        "returns": null,
+        "pure": false
+      }
+    ]
+  },
+  "SpeedRamp": {
+    "props": [
+      [
+        "in",
+        "bool",
+        "curved"
+      ],
+      [
+        "in",
+        "[CurvePointData]",
+        "points"
+      ],
+      [
+        "in",
+        "string",
+        "path"
+      ],
+      [
+        "in",
+        "[string]",
+        "presets"
+      ],
+      [
+        "in",
+        "int",
+        "preset"
+      ],
+      [
+        "in",
+        "bool",
+        "smooth"
+      ],
+      [
+        "in",
+        "float",
+        "at"
+      ],
+      [
+        "in",
+        "float",
+        "fastest"
+      ],
+      [
+        "in",
+        "float",
+        "slowest"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "curve",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "point",
+        "args": [
+          [
+            "index",
+            "int"
+          ],
+          [
+            "x",
+            "float"
+          ],
+          [
+            "y",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "remove",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "preset-chosen",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "smoothness",
+        "args": [
+          [
+            "smooth",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "extreme",
+        "args": [
+          [
+            "faster",
+            "bool"
+          ],
+          [
+            "speed",
+            "float"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      }
+    ]
+  },
+  "Sounds": {
+    "props": [
+      [
+        "in",
+        "[VoiceCardData]",
+        "voices-saved"
+      ],
+      [
+        "in",
+        "[VoiceCardData]",
+        "voices-builtin"
+      ],
+      [
+        "in",
+        "[VoiceCardData]",
+        "styles"
+      ],
+      [
+        "in",
+        "bool",
+        "voices-ready"
+      ],
+      [
+        "in",
+        "[SoundCardData]",
+        "mine"
+      ],
+      [
+        "in",
+        "bool",
+        "importing"
+      ],
+      [
+        "in",
+        "[SoundCardData]",
+        "concat"
+      ],
+      [
+        "in",
+        "int",
+        "concat-state"
+      ],
+      [
+        "in",
+        "int",
+        "concat-category"
+      ]
+    ],
+    "callbacks": [
+      {
+        "name": "voice-open",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "voice-remove",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "load-concat",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "concat-category-changed",
+        "args": [
+          [
+            "index",
+            "int"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "import",
+        "args": [],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "preview",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "add",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "remove",
+        "args": [
+          [
+            "id",
+            "string"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      },
+      {
+        "name": "shown",
+        "args": [
+          [
+            "on",
+            "bool"
+          ]
+        ],
+        "returns": null,
+        "pure": false
+      }
+    ]
+  }
+}

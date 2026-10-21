@@ -31,6 +31,9 @@ mod ui {
     slint::include_modules!();
 }
 
+#[cfg(feature = "web-bridge")]
+mod web_bridge;
+
 mod batch_volume;
 mod chips;
 mod dock;
@@ -264,6 +267,8 @@ fn start(project: Option<std::path::PathBuf>, smoke: bool) -> Result<(), slint::
         },
     )?;
 
+    #[cfg(feature = "web-bridge")]
+    let gpu = if web_bridge::enabled() { None } else { gpu };
     let host = match Host::start(gpu) {
         Ok(host) => host,
         Err(error) => {
@@ -2465,6 +2470,12 @@ fn start(project: Option<std::path::PathBuf>, smoke: bool) -> Result<(), slint::
         Shell::with(|_, app| platform::apply_ui_scale(app.window()));
     });
 
+    #[cfg(feature = "web-bridge")]
+    let result = if web_bridge::enabled() {
+        web_bridge::start();
+        slint::run_event_loop_until_quit()
+    } else { app.run() };
+    #[cfg(not(feature = "web-bridge"))]
     let result = app.run();
     drop(reader_sweep);
     log::info!("close: event loop exited (ok={})", result.is_ok());
