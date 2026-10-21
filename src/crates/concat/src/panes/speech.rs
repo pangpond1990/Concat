@@ -909,24 +909,7 @@ impl SpeechPane {
 /// offset inside a character steps back to the character's start; one past
 /// the end is the end. A trailing space is always written when the tag is
 /// not already followed by one, so the caller can put the caret after it.
-pub fn insert_tag(text: &str, tag: &str, at: usize) -> String {
-    let mut at = at.min(text.len());
-    while !text.is_char_boundary(at) {
-        at -= 1;
-    }
-    let (before, after) = text.split_at(at);
-    let lead = if before.is_empty() || before.ends_with(char::is_whitespace) {
-        ""
-    } else {
-        " "
-    };
-    let trail = if after.starts_with(char::is_whitespace) {
-        ""
-    } else {
-        " "
-    };
-    format!("{before}{lead}{tag}{trail}{after}")
-}
+pub use crate::speech_text::insert_tag;
 
 impl SpeechPane {
     /// The sheet, closed, with the voices saved on this machine.

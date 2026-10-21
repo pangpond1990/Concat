@@ -207,6 +207,7 @@ pub fn hex_of(colour: slint::Color) -> String {
 /// is how many the drawing has room for - the clip's width in pixels, held
 /// to a few thousand - and the path is normalised so the Path that renders
 /// it stretches the box onto the clip's current width.
+#[cfg(not(target_arch = "wasm32"))]
 pub fn wave_path(
     peaks: &concat_media::Pyramid,
     source_start: f32,

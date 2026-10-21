@@ -3,6 +3,12 @@
 use slint::ComponentHandle;
 use wasm_bindgen::prelude::*;
 mod ui { slint::include_modules!(); }
+mod bridge;
+pub use bridge::apply_snapshot;
+#[path="../../../src/crates/concat/src/keymap.rs"] mod keymap;
+#[path="../../../src/crates/concat/src/speech_text.rs"] mod speech_text;
+mod prefs { #[derive(Default)] pub struct Preferences { pub keybinds:std::collections::HashMap<String,String> } }
+mod platform { pub fn keys(parts:&[&str])->String {parts.join("+")} pub fn delete_key(shift:bool)->String {if shift {"Shift+Delete"} else {"Delete"}.into()} }
 
 #[path = "../../../src/crates/concat/src/format.rs"]
 mod format;
@@ -39,6 +45,7 @@ pub fn start() -> Result<(), JsValue> {
     app.global::<ui::Fmt>().on_hex_of(|value,alpha| if alpha {format::hex_rgba(value)} else {format::hex_of(value)}.into());
     app.global::<ui::Fmt>().on_hex_digits(|value| format::hex_of(value)[1..].into());
     app.global::<ui::Fmt>().on_color_of(|text,fallback| format::parse_colour(&text).unwrap_or(fallback));
+    bridge::bind(&app);
     app.set_app_version("0.2.8 · browser port validation".into());
     app.run().map_err(|e| JsValue::from_str(&e.to_string()))
 }
