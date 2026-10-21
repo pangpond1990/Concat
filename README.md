@@ -1,3 +1,7 @@
+> **PON Cut: local browser editor powered by Concat.** This fork adds a web UI on `feat/web-editor`.
+> Open `Start PON Cut.command` on macOS, or see [web setup and usage](web/README.md).
+> Original Concat engine and desktop source are preserved below.
+
 <p align="center">
   <img src="https://cdn.jsdelivr.net/gh/jub0t/Concat@main/assets/concat-mark-dark.png" alt="Concat" width="100" />
 </p>

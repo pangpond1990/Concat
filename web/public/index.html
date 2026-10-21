@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!-- SPDX-FileCopyrightText: 2026 PON Cut contributors -->
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101213">
+  <title>PON Cut — Local video studio</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="PON Cut หน้าหลัก"><span class="brand-mark">P<span>╱</span></span><span>PON<span class="brand-light">CUT</span><small>LOCAL VIDEO STUDIO</small></span></a>
+    <div class="project-heading"><span class="eyebrow">WORKSPACE</span><h1 id="project-name">เริ่มเรื่องราวของคุณ</h1></div>
+    <div class="top-actions"><span class="engine-status" id="engine-status"><i></i>กำลังเชื่อมต่อ</span><button id="projects-button" class="quiet">โปรเจกต์</button><button id="save-button" disabled class="quiet">บันทึก <kbd>⌘S</kbd></button><button id="export-button" class="primary" disabled>ส่งออกวิดีโอ <span>↗</span></button></div>
+  </header>
+
+  <main>
+    <section id="welcome" class="welcome" aria-labelledby="welcome-title">
+      <div class="welcome-copy"><span class="eyebrow accent">YOUR FOOTAGE. YOUR MACHINE.</span><h2 id="welcome-title">เปลี่ยนคลิปที่มี<br>ให้เป็นเรื่องที่อยากเล่า<span class="accent">.</span></h2><p>ตัดต่อผ่านเบราว์เซอร์ เก็บทุกไฟล์ไว้บนเครื่องคุณ<br>นำเข้าคลิป จัดไทม์ไลน์ ใส่ข้อความ แล้วส่งออกได้เลย</p><button id="new-project" class="primary large">＋ สร้างโปรเจกต์ใหม่</button><div class="welcome-note"><span class="status-dot"></span>ไม่ต้องอัปโหลดขึ้นคลาวด์ · ไม่มีลายน้ำ</div></div>
+      <div class="welcome-art" aria-hidden="true"><div class="art-label">FROM FIRST CUT TO FINAL FRAME</div><div class="art-screen"><span class="art-play">▶</span><span class="art-corner tl"></span><span class="art-corner br"></span><div class="art-time">00:00:01:24</div></div><div class="art-track"><i></i><i></i><i></i></div><div class="art-track second"><i></i></div><div class="art-track third"><i></i><i></i></div><div class="art-playhead"></div><div class="art-bottom">01 / MAKE SOMETHING WORTH WATCHING</div></div>
+      <section class="recent-section"><div class="section-heading"><h2>โปรเจกต์ของคุณ</h2><span class="muted">บันทึกอยู่บนเครื่องนี้</span></div><div id="recent-projects" class="project-grid"><p class="muted">ยังไม่มีโปรเจกต์ — เริ่มจากคลิปแรกของคุณ</p></div></section>
+    </section>
+
+    <section id="editor" class="editor" hidden aria-label="พื้นที่ตัดต่อ">
+      <aside class="media-panel panel">
+        <div class="panel-heading"><h2>Media</h2><span id="media-count" class="badge">0</span></div>
+        <button id="import-button" class="import-button">＋ นำเข้าไฟล์ <small>วิดีโอ · เสียง · รูปภาพ</small></button>
+        <input id="file-input" type="file" accept="video/*,audio/*,image/*,.mkv,.m4a,.flac" multiple hidden>
+        <div id="media-list" class="media-list"></div>
+        <div class="panel-foot">ลากไฟล์ลงที่นี่<br>กด ＋ บนไฟล์เพื่อเพิ่มท้ายไทม์ไลน์</div>
+      </aside>
+
+      <section class="preview-panel panel" aria-labelledby="preview-title">
+        <div class="panel-heading"><h2 id="preview-title">Preview</h2><span id="project-format" class="muted"></span><span class="preview-badge">ENGINE RENDER</span></div>
+        <div class="stage" id="stage">
+          <div class="stage-empty" id="stage-empty"><span>↥</span><strong>เริ่มด้วยคลิปแรก</strong><p>นำเข้าไฟล์ แล้วเพิ่มลงไทม์ไลน์</p></div>
+          <img id="frame" alt="ภาพพรีวิวของไทม์ไลน์" hidden>
+          <video id="playback" controls playsinline preload="metadata" width="640" height="360" hidden></video>
+          <span id="frame-loading" class="frame-loading" hidden>กำลังเรนเดอร์ภาพ…</span>
+        </div>
+        <div class="transport"><span id="playhead-time" class="timecode">00:00.00</span><button id="back-button" title="ย้อนกลับ 1 วินาที" aria-label="ย้อนกลับ 1 วินาที">↶</button><button id="play-button" class="play-button" title="เตรียมวิดีโอพรีวิวพร้อมเสียง" aria-label="เล่นพรีวิว">▶</button><button id="forward-button" title="ไปข้างหน้า 1 วินาที" aria-label="ไปข้างหน้า 1 วินาที">↷</button><span id="total-time" class="timecode muted">/ 00:00.00</span><span id="preview-hint" class="transport-hint">เล่นพร้อมเสียงเมื่อเตรียมพรีวิวเสร็จ</span></div>
+      </section>
+
+      <aside class="inspector panel"><div class="panel-heading"><h2>Inspector</h2><span class="muted" id="clip-kind"></span></div><div id="inspector-content" class="inspector-content"><div class="inspector-empty"><span>⌖</span><p>เลือกคลิปบนไทม์ไลน์<br>เพื่อปรับรายละเอียด</p></div></div></aside>
+
+      <section class="timeline-panel panel" aria-label="ไทม์ไลน์">
+        <div class="timeline-toolbar"><div class="toolbar-group"><button id="undo-button" title="Undo (⌘Z)" aria-label="Undo" disabled>↶</button><button id="redo-button" title="Redo (⌘⇧Z)" aria-label="Redo" disabled>↷</button><span class="divider"></span><button id="split-button" disabled>✂ แบ่งคลิป <kbd>S</kbd></button><button id="delete-button" disabled>ลบ <kbd>⌫</kbd></button><span class="divider"></span><button id="title-button">T ข้อความ</button><button id="track-button">＋ แทร็ก</button></div><div class="toolbar-group"><label class="toggle"><input type="checkbox" id="ripple"> Ripple</label><label class="zoom-label">ซูม <input id="zoom" type="range" min="15" max="140" value="55" aria-label="ซูมไทม์ไลน์"></label></div></div>
+        <div id="timeline-scroll" class="timeline-scroll"><div id="timeline-content" class="timeline-content"></div></div>
+        <div class="timeline-footer"><span><span class="status-dot"></span><span id="save-status">บันทึกแล้ว</span></span><span id="selection-status">คลิกคลิปเพื่อเลือก · ลากเพื่อย้าย · ลากขอบเพื่อตัด</span><span id="clip-count">0 clips</span></div>
+      </section>
+    </section>
+  </main>
+  <footer class="app-footer"><span>LOCAL FIRST. ALWAYS.</span><span>PON Cut · Powered by <a href="https://github.com/jub0t/Concat" target="_blank" rel="noreferrer">Concat</a> <span class="footer-separator">/</span> <a href="https://github.com/pangpond1990/Concat/tree/feat/web-editor" target="_blank" rel="noreferrer">Source · AGPL-3.0</a></span></footer>
+
+  <dialog id="project-dialog"><form id="project-form"><div class="dialog-heading"><span class="eyebrow accent">NEW PROJECT</span><button type="button" data-close="project-dialog" class="icon-button" aria-label="ปิด">×</button></div><h2>เริ่มโปรเจกต์ใหม่</h2><label>ชื่อโปรเจกต์<input id="project-title-input" name="name" required maxlength="100" placeholder="เช่น คลิปรีวิวสินค้า" autocomplete="off"></label><fieldset><legend>สัดส่วนวิดีโอ</legend><div class="format-options"><label><input type="radio" name="format" value="1080x1920" checked><span><i class="format-icon portrait"></i><strong>9:16</strong><small>TikTok / Reels</small></span></label><label><input type="radio" name="format" value="1920x1080"><span><i class="format-icon landscape"></i><strong>16:9</strong><small>YouTube</small></span></label><label><input type="radio" name="format" value="1080x1080"><span><i class="format-icon square"></i><strong>1:1</strong><small>Square</small></span></label></div></fieldset><label>เฟรมเรต<select name="fps"><option value="24">24 fps</option><option value="25">25 fps</option><option value="30" selected>30 fps</option><option value="60">60 fps</option></select></label><p id="project-error" class="error-text" role="alert"></p><button type="submit" class="primary wide">สร้างโปรเจกต์ →</button></form></dialog>
+
+  <dialog id="title-dialog"><form id="title-form"><div class="dialog-heading"><span class="eyebrow accent">ADD A TITLE</span><button type="button" data-close="title-dialog" class="icon-button" aria-label="ปิด">×</button></div><h2>ใส่ข้อความบนวิดีโอ</h2><label>ข้อความ<textarea name="text" required rows="3" maxlength="2000" placeholder="เขียนเรื่องที่อยากเล่า…"></textarea></label><div class="field-grid"><label>ความยาว (วินาที)<input type="number" name="duration" min="0.1" max="3600" step="0.1" value="4" required></label><label>ตำแหน่ง<select name="offset"><option value="0.3">ด้านล่าง</option><option value="0">กึ่งกลาง</option><option value="-0.3">ด้านบน</option></select></label></div><button class="primary wide" type="submit">เพิ่มที่ตำแหน่งเล่น</button></form></dialog>
+
+  <dialog id="render-dialog"><div class="dialog-heading"><span class="eyebrow accent" id="render-label">EXPORT VIDEO</span><button type="button" id="render-close" class="icon-button" aria-label="ปิด">×</button></div><h2 id="render-title">กำลังส่งออกวิดีโอ</h2><p id="render-description" class="muted">ประมวลผลด้วย engine บนเครื่องนี้</p><progress id="render-progress" max="1" value="0"></progress><div class="progress-info"><span id="render-stage">เตรียมงาน…</span><strong id="render-percent">0%</strong></div><p id="render-error" class="error-text" role="alert"></p><div class="render-actions"><button id="cancel-render" class="quiet">ยกเลิก</button><a id="download-button" class="primary" hidden download>ดาวน์โหลด MP4 ↗</a></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

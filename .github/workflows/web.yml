@@ -1,0 +1,25 @@
+name: Web editor
+on:
+  push:
+    paths: ['web/**', '.github/workflows/web.yml', 'Start PON Cut.command']
+  pull_request:
+    paths: ['web/**', '.github/workflows/web.yml', 'Start PON Cut.command']
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: macos-14
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install test media tools
+        run: brew install ffmpeg
+      - name: Prepare pinned official engine
+        working-directory: web
+        run: npm run setup
+      - name: Test browser adapter against native engine
+        working-directory: web
+        run: npm test

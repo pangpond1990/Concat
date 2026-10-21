@@ -58,3 +58,8 @@ desktop.ini
 # FFmpeg built for a phone by src/scripts/ffmpeg-mobile.sh: sources,
 # build trees and the installed prefixes, all machine-built.
 /src/vendor/
+
+# Local web editor projects, uploads, renders and runtime logs.
+/web/data/
+/web/node_modules/
+/web/*.log
