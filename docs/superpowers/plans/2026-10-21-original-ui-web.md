@@ -31,13 +31,19 @@
 - [x] Test a create/open/import/edit/export roundtrip using original callbacks.
 
 ### Task 3: Deliver
-- [ ] Verify original UI in Chrome, including actual editing and playback.
+- [x] Verify original UI in Chrome, including actual editing and playback.
 - [x] Document build/run, limits and provenance; push changes to fork.
 
 ## Final verification status
 
-Original UI editing and export were verified in Chrome. The final WASM event-loop
-wakeup fix (4d5e7ba, Actions run 39556526595) built successfully and is installed
-locally. Foreground playback after this last fix still requires visual validation:
-the browser automation connection timed out after the machine/session restarted.
-The localhost service and matching installed artifact hash were verified.
+Completed on 22 October 2026 in Chrome. The installed final WASM event-loop
+wakeup fix (4d5e7ba, Actions run 39556526595) updates the preview, timecode and
+playhead after one Play click with no further pointer input, through the end
+of the five-second test clip. Split and undo were rechecked successfully.
+Earlier import, Thai title, saved-project reopen and fully decoded H.264/AAC
+export checks also passed. This is a local initial port; advanced feature and
+sustained frame-rate coverage remain limited as documented in the README.
+
+The automation-created Chrome tab was blocked with ERR_BLOCKED_BY_CLIENT.
+A normal tab opened by the user loaded the same localhost URL successfully;
+no security settings were changed. The working tab was left open.
