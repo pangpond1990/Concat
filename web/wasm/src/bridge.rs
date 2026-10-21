@@ -13,8 +13,8 @@ thread_local! {
  static MACOS: std::cell::Cell<bool>=const {std::cell::Cell::new(false)};
  static CAPTURING: std::cell::Cell<bool>=const {std::cell::Cell::new(false)};
 }
-#[wasm_bindgen(inline_js="export function original_ui_event(value) { window.dispatchEvent(new CustomEvent('concat-ui', { detail: value })); }")]
-extern "C" { fn original_ui_event(value:&str); }
+#[wasm_bindgen(inline_js="export function original_ui_event(value) { window.dispatchEvent(new CustomEvent('concat-ui', { detail: value })); } export function original_ui_error(value) { window.dispatchEvent(new CustomEvent('concat-sync-error', { detail: value })); }")]
+extern "C" { fn original_ui_event(value:&str); fn original_ui_error(value:&str); }
 pub fn emit(name:&str,args:Vec<Value>) {
  if !APPLYING.with(|v|v.get()) {original_ui_event(&json!({"name":name,"args":args}).to_string());}
 }
@@ -45,6 +45,12 @@ pub fn bind(app:&App) {
 #[wasm_bindgen]
 pub fn apply_snapshot(text:&str)->Result<(),JsValue> {
  let value:Value=serde_json::from_str(text).map_err(|e|JsValue::from_str(&e.to_string()))?;
+ // Fetch resolves outside winit's dispatch. Queue through its event-loop proxy
+ // so property invalidation and deferred component layout wake the renderer.
+ slint::invoke_from_event_loop(move || {if let Err(error)=apply_state(&value){original_ui_error(&error);}})
+  .map_err(|error|JsValue::from_str(&error.to_string()))
+}
+fn apply_state(value:&Value)->Result<(),String> {
  if let Some(macos)=value.get("App.macos").and_then(Value::as_bool) {MACOS.with(|v|v.set(macos));}
  if let Some(keys)=value.get("__keybinds") {KEYBINDS.with(|p|p.borrow_mut().keybinds=serde_json::from_value(keys.clone()).unwrap_or_default());}
  if let Some(capture)=value.get("__capturing").and_then(Value::as_bool) {CAPTURING.with(|c|c.set(capture));}
@@ -54,7 +60,7 @@ pub fn apply_snapshot(text:&str)->Result<(),JsValue> {
  APPLYING.with(|v|v.set(true));
  let result=APP.with(|slot|slot.borrow().as_ref().ok_or("UI is not ready".to_string()).and_then(|app|{let result=generated::apply(app,&value);app.window().request_redraw();result}));
  APPLYING.with(|v|v.set(false));
- result.map_err(|e|JsValue::from_str(&e))
+ result
 }
 #[wasm_bindgen]
 pub fn resize(width:f32,height:f32) {
