@@ -63,3 +63,5 @@ desktop.ini
 /web/data/
 /web/node_modules/
 /web/*.log
+/web/wasm/target/
+/web/wasm/pkg/

@@ -1,0 +1,34 @@
+name: Original UI WebAssembly
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/original-ui-web]
+    paths: ['web/wasm/**', 'src/crates/concat/ui/**', '.github/workflows/original-ui-web.yml']
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: '1.93.1'
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: web/wasm
+      - name: Compile the original Slint component tree
+        working-directory: web/wasm
+        run: cargo build --release --target wasm32-unknown-unknown
+      - name: Package browser bindings
+        working-directory: web/wasm
+        run: |
+          version=$(cargo tree -i wasm-bindgen --depth 0 | head -1 | cut -d' ' -f2 | tr -d v)
+          cargo install wasm-bindgen-cli --version "$version" --locked
+          wasm-bindgen target/wasm32-unknown-unknown/release/concat_browser.wasm --target web --out-dir pkg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: concat-original-ui-wasm
+          path: web/wasm/pkg
+          retention-days: 7
