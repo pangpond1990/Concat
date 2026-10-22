@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Concat Web Studio — Open-Source Video Editor</title>
+  <link rel="icon" type="image/png" href="/assets/concat_logo_512.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- ── Top Title Bar ─────────────────────────────────────────────────────── -->
+  <header class="title-bar">
+    <div class="title-left">
+      <button type="button" class="brand-pill" id="btnHome" title="กลับหน้าแรก / Home">
+        <img src="/assets/concat_logo_512.png" alt="Concat" />
+        <span>Concat</span>
+      </button>
+      <nav class="menu-bar" aria-label="Main Menu">
+        <button type="button" class="menu-btn" id="btnMenuNew" data-i18n="newProject">สร้างโปรเจกต์</button>
+        <button type="button" class="menu-btn" id="btnMenuDemo" data-i18n="tryDemo">โปรเจกต์ตัวอย่าง</button>
+        <button type="button" class="menu-btn" id="btnMenuSave" data-i18n="save">บันทึก (⌘S)</button>
+      </nav>
+    </div>
+
+    <div class="title-center" id="projectHeaderBox" hidden>
+      <div class="project-title-box">
+        <input type="text" id="projectNameInput" class="project-name-input" value="Untitled" aria-label="Project Name" />
+        <span id="saveBadge" class="save-badge">saved</span>
+      </div>
+    </div>
+
+    <div class="title-right">
+      <div class="accent-dots" id="accentPicker" title="Accent Colour">
+        <button type="button" class="accent-dot active" data-accent="lime" style="background:#cbf53f" aria-label="Lime"></button>
+        <button type="button" class="accent-dot" data-accent="sky" style="background:#5fb8ff" aria-label="Sky"></button>
+        <button type="button" class="accent-dot" data-accent="violet" style="background:#b394ff" aria-label="Violet"></button>
+        <button type="button" class="accent-dot" data-accent="rose" style="background:#ff6fa3" aria-label="Rose"></button>
+        <button type="button" class="accent-dot" data-accent="amber" style="background:#ffb340" aria-label="Amber"></button>
+        <button type="button" class="accent-dot" data-accent="mint" style="background:#3fdcc4" aria-label="Mint"></button>
+      </div>
+      <button type="button" class="btn" id="btnThemeToggle" title="Switch Dark / Light Theme">🌙</button>
+      <button type="button" class="btn" id="btnLangToggle" title="Switch Language TH / EN">TH</button>
+      <button type="button" class="btn btn-accent" id="btnOpenExport" hidden>
+        <span>↑</span>
+        <span data-i18n="export">ส่งออกวิดีโอ (Export)</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Launch Screen (Home) ──────────────────────────────────────────────── -->
+  <main class="launch-screen" id="launchScreen">
+    <div class="launch-container">
+      <section class="launch-hero">
+        <div class="launch-hero-info">
+          <img src="/assets/concat_logo_512.png" alt="Concat Logo" />
+          <div>
+            <h1 class="launch-hero-title">Concat Web Studio</h1>
+            <p class="launch-hero-sub" data-i18n="heroSubtitle">
+              โปรแกรมตัดต่อวิดีโอโอเพนซอร์ส ทำงานผ่านเว็บเบราว์เซอร์ ขับเคลื่อนด้วย Rust Engine & GPU Compositor แท้
+            </p>
+            <div class="launch-engine-pill" id="engineStatusPill">
+              <span>⚡</span>
+              <span id="engineVersionText">Connecting to Concat Engine...</span>
+            </div>
+          </div>
+        </div>
+        <div class="launch-hero-actions">
+          <button type="button" class="btn btn-lg" id="btnLaunchDemo">
+            <span>✨</span>
+            <span data-i18n="createDemo">เปิดโปรเจกต์ตัวอย่างพร้อมตัดต่อ</span>
+          </button>
+          <button type="button" class="btn btn-accent btn-lg" id="btnLaunchCreate">
+            <span>+</span>
+            <span data-i18n="createNewProject">สร้างโปรเจกต์ใหม่</span>
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <div class="launch-section-header">
+          <h2 class="launch-section-title" data-i18n="recentProjects">โปรเจกต์ล่าสุด (Recent Projects)</h2>
+          <input type="search" id="launchSearchInput" class="search-input" style="max-width:240px" placeholder="ค้นหาโปรเจกต์..." />
+        </div>
+        <div class="projects-grid" id="projectsGrid"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ── Studio 4-Pane Workspace ───────────────────────────────────────────── -->
+  <div class="studio-workspace" id="studioWorkspace" hidden>
+    <!-- Upper Deck: Library | Preview Monitor | Inspector -->
+    <div class="upper-deck">
+      <!-- 1. Left Pane: Library -->
+      <section class="pane" aria-label="Library">
+        <div class="library-nav" id="libraryNav">
+          <button type="button" class="lib-tab active" data-tab="media">
+            <span>🎞️</span>
+            <span data-i18n="tabMedia">มีเดีย</span>
+          </button>
+          <button type="button" class="lib-tab" data-tab="text">
+            <span>T</span>
+            <span data-i18n="tabText">ข้อความ</span>
+          </button>
+          <button type="button" class="lib-tab" data-tab="shapes">
+            <span>⬢</span>
+            <span data-i18n="tabShapes">รูปทรง</span>
+          </button>
+          <button type="button" class="lib-tab" data-tab="effects">
+            <span>✨</span>
+            <span data-i18n="tabEffects">เอฟเฟกต์</span>
+          </button>
+          <button type="button" class="lib-tab" data-tab="filters">
+            <span>🎨</span>
+            <span data-i18n="tabFilters">ฟิลเตอร์</span>
+          </button>
+          <button type="button" class="lib-tab" data-tab="transitions">
+            <span>🔀</span>
+            <span data-i18n="tabTransitions">ทรานซิชัน</span>
+          </button>
+          <button type="button" class="lib-tab" data-tab="audio">
+            <span>🔊</span>
+            <span data-i18n="tabAudio">เอฟเฟกต์เสียง</span>
+          </button>
+          <button type="button" class="lib-tab" data-tab="adjust">
+            <span>🎚️</span>
+            <span data-i18n="tabAdjust">ปรับสี</span>
+          </button>
+        </div>
+
+        <div class="library-body">
+          <!-- Sub-sidebar for Media tab -->
+          <aside class="media-sidebar" id="mediaSidebar">
+            <div class="media-sidebar-group">Media</div>
+            <button type="button" class="media-filter-btn active" data-filter="all">
+              <span>All media</span>
+              <span class="media-filter-count" id="countAll">0</span>
+            </button>
+            <button type="button" class="media-filter-btn" data-filter="video">
+              <span>Video</span>
+              <span class="media-filter-count" id="countVideo">0</span>
+            </button>
+            <button type="button" class="media-filter-btn" data-filter="audio">
+              <span>Audio</span>
+              <span class="media-filter-count" id="countAudio">0</span>
+            </button>
+            <button type="button" class="media-filter-btn" data-filter="image">
+              <span>Images</span>
+              <span class="media-filter-count" id="countImage">0</span>
+            </button>
+            <div class="media-sidebar-group">Generated</div>
+            <button type="button" class="media-filter-btn" data-filter="speech">
+              <span>Speech</span>
+              <span class="media-filter-count" id="countSpeech">0</span>
+            </button>
+          </aside>
+
+          <!-- Main Library Content -->
+          <div class="library-content">
+            <div class="library-toolbar" id="libraryToolbar">
+              <button type="button" class="btn" id="btnImportMedia">
+                <span>↓</span>
+                <span data-i18n="importMedia">นำเข้าไฟล์ (Import)</span>
+              </button>
+              <input type="file" id="fileUploadInput" multiple accept="video/*,audio/*,image/*" hidden />
+              <input type="search" id="librarySearchInput" class="search-input" placeholder="ค้นหา..." />
+            </div>
+            <div class="cards-grid" id="libraryGrid"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Center Pane: Preview Monitor -->
+      <section class="pane" aria-label="Preview Monitor">
+        <div class="monitor-header">
+          <span class="monitor-title" data-i18n="preview">หน้าจอตัวอย่าง (Preview)</span>
+          <span class="monitor-spec" id="monitorSpecLabel">1920 × 1080 · 30 fps</span>
+          <div style="display:flex;gap:4px">
+            <button type="button" class="btn-icon" id="btnRefreshFrame" title="Render True Engine Frame">🔄</button>
+          </div>
+        </div>
+
+        <div class="monitor-stage-wrap" id="monitorStageWrap">
+          <div class="monitor-stage" id="monitorStage" style="width:640px;height:360px">
+            <img id="engineFrameImg" class="engine-frame" alt="Composited Frame" hidden />
+            <div id="stageEmptyHint" class="stage-empty-hint">
+              <span>🎬</span>
+              <span data-i18n="emptyStageHint">วางคลิปลงบนไทม์ไลน์เพื่อดูตัวอย่างภาพ</span>
+            </div>
+            <div class="stage-overlay" id="stageOverlay" hidden>
+              <div class="stage-gizmo drag-handle" id="stageGizmo" tabindex="0" aria-label="Clip Position Handle (use arrow keys to move)">
+                <div class="stage-rot-line"></div>
+                <div class="stage-rot-handle" data-grip="rot" title="Rotate"></div>
+                <div class="stage-grip nw" data-grip="scale" title="Scale"></div>
+                <div class="stage-grip ne" data-grip="scale" title="Scale"></div>
+                <div class="stage-grip se" data-grip="scale" title="Scale"></div>
+                <div class="stage-grip sw" data-grip="scale" title="Scale"></div>
+                <div class="stage-pill" id="stageGizmoPill">100% · 0°</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="monitor-transport">
+          <div class="timecode-box">
+            <span class="timecode-current" id="timecodeCurrent">00:00:00:00</span>
+            <span class="timecode-total" id="timecodeTotal">/ 00:00:00:00</span>
+          </div>
+
+          <div class="transport-buttons">
+            <button type="button" class="btn-icon" id="btnJumpStart" title="Jump to Start (Home)">⏮</button>
+            <button type="button" class="btn-icon" id="btnStepBack" title="Previous Frame (←)">⏪</button>
+            <button type="button" class="play-btn" id="btnPlayToggle" title="Play / Pause (Space)">▶</button>
+            <button type="button" class="btn-icon" id="btnStepForward" title="Next Frame (→)">⏩</button>
+            <button type="button" class="btn-icon" id="btnJumpEnd" title="Jump to End (End)">⏭</button>
+          </div>
+
+          <div class="transport-right">
+            <select id="aspectRatioSelect" class="compact-select" title="Timeline Frame Size">
+              <option value="1920x1080">16:9 (1080p)</option>
+              <option value="1280x720">16:9 (720p)</option>
+              <option value="1080x1920">9:16 (Vertical)</option>
+              <option value="1080x1080">1:1 (Square)</option>
+              <option value="1080x1350">4:5 (Portrait)</option>
+              <option value="3840x2160">16:9 (4K UHD)</option>
+            </select>
+            <select id="previewQualitySelect" class="compact-select" title="Preview Resolution">
+              <option value="0.5" selected>Half</option>
+              <option value="1">Full</option>
+              <option value="0.25">Quarter</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Right Pane: Inspector -->
+      <section class="pane" aria-label="Inspector">
+        <div class="inspector-tabs" id="inspectorTabs"></div>
+        <div class="inspector-body" id="inspectorBody"></div>
+      </section>
+    </div>
+
+    <!-- Lower Deck: 4. Multi-Track Timeline Pane -->
+    <section class="pane timeline-pane" aria-label="Timeline">
+      <div class="timeline-tabs-bar">
+        <div class="timeline-tabs-list" id="timelineTabsList"></div>
+        <div style="font-size:11px;color:var(--fg-dim)" id="timelineSummaryLabel"></div>
+      </div>
+
+      <div class="timeline-toolbar">
+        <div class="tl-tools-left">
+          <button type="button" class="btn-icon" id="btnAddTrack" title="Add Track (+)">＋</button>
+          <div class="tl-divider"></div>
+          <button type="button" class="btn-icon" id="btnUndo" title="Undo (⌘Z)" disabled>↶</button>
+          <button type="button" class="btn-icon" id="btnRedo" title="Redo (⇧⌘Z)" disabled>↷</button>
+          <div class="tl-divider"></div>
+          <button type="button" class="btn-icon" id="btnSplit" title="Split Clip at Playhead (S)">✂️</button>
+          <button type="button" class="btn-icon" id="btnMerge" title="Merge Split Clips">🔗</button>
+          <button type="button" class="btn-icon" id="btnDeleteClip" title="Delete Selected Clip (Backspace/Delete)">🗑</button>
+          <div class="tl-divider"></div>
+          <button type="button" class="btn-icon active" id="btnSnapToggle" title="Snap to Edges & Playhead">🧲</button>
+          <button type="button" class="btn-icon" id="btnMagneticToggle" title="Magnetic / Ripple Timeline">⛓️</button>
+          <div class="tl-divider"></div>
+          <button type="button" class="btn" id="btnQuickTitle" title="Add Title at Playhead">
+            <span>T</span>
+            <span data-i18n="addTitle">เพิ่มข้อความ</span>
+          </button>
+          <button type="button" class="btn" id="btnOpenCaptions" title="Add Batch Captions">
+            <span>💬</span>
+            <span data-i18n="captions">ซับไตเติล</span>
+          </button>
+          <button type="button" class="btn" id="btnOpenTts" title="Text to Speech (TTS)">
+            <span>🗣️</span>
+            <span data-i18n="tts">พากย์เสียง AI</span>
+          </button>
+        </div>
+
+        <div class="tl-tools-right">
+          <button type="button" class="btn-icon" id="btnZoomOut" title="Zoom Out">－</button>
+          <input type="range" id="zoomSlider" min="15" max="240" value="65" style="width:95px;accent-color:var(--accent)" />
+          <button type="button" class="btn-icon" id="btnZoomIn" title="Zoom In">＋</button>
+          <button type="button" class="btn-icon" id="btnZoomFit" title="Fit Timeline">⛶</button>
+        </div>
+      </div>
+
+      <div class="timeline-workarea">
+        <div class="track-headers">
+          <div class="track-headers-spacer">Tracks</div>
+          <div class="track-headers-list" id="trackHeadersList"></div>
+        </div>
+
+        <div class="timeline-scroll" id="timelineScroll">
+          <div class="timeline-canvas-inner" id="timelineCanvasInner">
+            <div class="time-ruler" id="timeRuler"></div>
+            <div class="lanes-stack" id="lanesStack"></div>
+            <div class="playhead-line" id="playheadLine" style="left:0px">
+              <div class="playhead-cap"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── Modal 1: New Project Dialog ───────────────────────────────────────── -->
+  <dialog class="modal-dialog" id="dialogNewProject">
+    <form method="dialog" id="formNewProject">
+      <div class="dialog-header">
+        <span data-i18n="createNewProject">สร้างโปรเจกต์ใหม่</span>
+        <button type="button" class="btn-icon" data-close-dialog="dialogNewProject">✕</button>
+      </div>
+      <div class="dialog-body">
+        <div class="insp-row">
+          <label class="insp-label" for="newProjName">ชื่อโปรเจกต์</label>
+          <input type="text" id="newProjName" class="insp-input" value="My Video Cut" required />
+        </div>
+        <div class="insp-row">
+          <label class="insp-label" for="newProjRes">ขนาดภาพ</label>
+          <select id="newProjRes" class="insp-select">
+            <option value="1920x1080">1920 × 1080 (16:9 Full HD)</option>
+            <option value="1080x1920">1080 × 1920 (9:16 TikTok / Reels / Shorts)</option>
+            <option value="1280x720">1280 × 720 (16:9 HD)</option>
+            <option value="1080x1080">1080 × 1080 (1:1 Square)</option>
+            <option value="3840x2160">3840 × 2160 (16:9 4K UHD)</option>
+          </select>
+        </div>
+        <div class="insp-row">
+          <label class="insp-label" for="newProjFps">เฟรมเรต (FPS)</label>
+          <select id="newProjFps" class="insp-select">
+            <option value="30">30 fps</option>
+            <option value="60">60 fps</option>
+            <option value="24">24 fps (Cinema)</option>
+            <option value="25">25 fps (PAL)</option>
+          </select>
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn" data-close-dialog="dialogNewProject">ยกเลิก</button>
+        <button type="submit" class="btn btn-accent">สร้างโปรเจกต์</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ── Modal 2: Export Video Dialog ──────────────────────────────────────── -->
+  <dialog class="modal-dialog" id="dialogExport">
+    <div class="dialog-header">
+      <span data-i18n="export">ส่งออกวิดีโอ (Export MP4)</span>
+      <button type="button" class="btn-icon" data-close-dialog="dialogExport">✕</button>
+    </div>
+    <div class="dialog-body">
+      <div class="insp-row">
+        <label class="insp-label" for="exportFilename">ชื่อไฟล์</label>
+        <input type="text" id="exportFilename" class="insp-input" value="output.mp4" />
+      </div>
+      <div class="insp-row">
+        <label class="insp-label" for="exportCodec">Codec</label>
+        <select id="exportCodec" class="insp-select">
+          <option value="h264">H.264 (MP4 มาตรฐาน)</option>
+          <option value="hevc">HEVC / H.265</option>
+          <option value="av1">AV1</option>
+        </select>
+      </div>
+      <div class="insp-row">
+        <label class="insp-label" for="exportCrf">คุณภาพ (CRF)</label>
+        <select id="exportCrf" class="insp-select">
+          <option value="18">สูงมาก (CRF 18)</option>
+          <option value="20" selected>มาตรฐาน (CRF 20 — แนะนำ)</option>
+          <option value="24">ไฟล์เล็ก (CRF 24)</option>
+        </select>
+      </div>
+      <div class="insp-row">
+        <label class="insp-label" for="exportPreset">ความเร็วเข้ารหัส</label>
+        <select id="exportPreset" class="insp-select">
+          <option value="ultrafast">Ultrafast (เร็วที่สุด)</option>
+          <option value="fast">Fast</option>
+          <option value="medium" selected>Medium (สมดุล)</option>
+          <option value="slow">Slow (บีบอัดดีที่สุด)</option>
+        </select>
+      </div>
+
+      <div id="exportProgressBox" hidden style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+        <div style="display:flex;justify-content:space-between;font-size:12px">
+          <span id="exportStageText">Rendering...</span>
+          <span id="exportPercentText" style="font-family:var(--font-mono)">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="exportProgressFill"></div>
+        </div>
+      </div>
+
+      <div id="exportDoneBox" hidden style="background:var(--well);padding:12px;border-radius:8px;display:flex;flex-direction:column;gap:8px">
+        <div style="color:var(--green);font-weight:700">✓ ส่งออกวิดีโอสำเร็จ!</div>
+        <video id="exportPreviewVideo" controls style="width:100%;max-height:200px;background:#000;border-radius:6px"></video>
+        <a id="exportDownloadLink" class="btn btn-accent" href="#" download style="text-decoration:none;text-align:center">
+          ⬇ ดาวน์โหลดไฟล์ MP4 ลงเครื่อง
+        </a>
+      </div>
+    </div>
+    <div class="dialog-footer">
+      <button type="button" class="btn" id="btnCancelExportJob" hidden>ยกเลิกการเรนเดอร์</button>
+      <button type="button" class="btn" data-close-dialog="dialogExport">ปิด</button>
+      <button type="button" class="btn btn-accent" id="btnStartExport">เริ่มเรนเดอร์ (Render MP4)</button>
+    </div>
+  </dialog>
+
+  <!-- ── Modal 3: Text-to-Speech (TTS) Dialog ──────────────────────────────── -->
+  <dialog class="modal-dialog" id="dialogTts">
+    <form method="dialog" id="formTts">
+      <div class="dialog-header">
+        <span>🗣️ สร้างเสียงพากย์ (Text-to-Speech)</span>
+        <button type="button" class="btn-icon" data-close-dialog="dialogTts">✕</button>
+      </div>
+      <div class="dialog-body">
+        <div class="insp-row">
+          <label class="insp-label" for="ttsVoice">เสียงพูด</label>
+          <select id="ttsVoice" class="insp-select">
+            <option value="auto">อัตโนมัติ (ไทย Kanya / อังกฤษ Samantha)</option>
+            <option value="Kanya">Kanya (ภาษาไทย)</option>
+            <option value="Samantha">Samantha (English US)</option>
+            <option value="Daniel">Daniel (English UK)</option>
+          </select>
+        </div>
+        <div>
+          <label class="insp-label" for="ttsText" style="display:block;margin-bottom:5px">ข้อความที่ต้องการให้อ่าน</label>
+          <textarea id="ttsText" class="insp-textarea" rows="3" placeholder="พิมพ์ข้อความภาษาไทยหรือภาษาอังกฤษ...">ยินดีต้อนรับสู่ Concat Web Studio โปรแกรมตัดต่อวิดีโอโอเพนซอร์ส</textarea>
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn" data-close-dialog="dialogTts">ยกเลิก</button>
+        <button type="submit" class="btn btn-accent" id="btnSubmitTts">สร้างเสียงพากย์ลงไทม์ไลน์</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ── Modal 4: Batch Captions Dialog ────────────────────────────────────── -->
+  <dialog class="modal-dialog" id="dialogCaptions">
+    <form method="dialog" id="formCaptions">
+      <div class="dialog-header">
+        <span>💬 เพิ่มซับไตเติลหลายบรรทัด (Batch Captions)</span>
+        <button type="button" class="btn-icon" data-close-dialog="dialogCaptions">✕</button>
+      </div>
+      <div class="dialog-body">
+        <p style="font-size:11.5px;color:var(--fg-muted)">
+          ป้อนซับไตเติลบรรทัดละ 1 ช่วงเวลา ในรูปแบบ <code>เริ่ม-จบ: ข้อความ</code> (วินาที) หรือป้อนข้อความแต่ละบรรทัดเพื่อเรียงต่อกันอัตโนมัติจากตำแหน่ง Playhead
+        </p>
+        <textarea id="captionsTextarea" class="insp-textarea" rows="5">0.0-2.5: สวัสดีครับ ยินดีต้อนรับสู่ Concat Web
+2.5-5.5: ตัดต่อวิดีโอหลายแทร็กพร้อมเอฟเฟกต์ครบครัน
+5.5-8.5: ส่งออกวิดีโอความละเอียดสูงได้ทันที ไม่มีลายน้ำ</textarea>
+        <div class="insp-row">
+          <label class="insp-label" for="captionsColor">สีข้อความ</label>
+          <input type="color" id="captionsColor" value="#ffffff" />
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn" data-close-dialog="dialogCaptions">ยกเลิก</button>
+        <button type="submit" class="btn btn-accent">วางซับไตเติลลงไทม์ไลน์</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

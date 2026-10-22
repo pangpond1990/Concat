@@ -58,3 +58,10 @@ desktop.ini
 # FFmpeg built for a phone by src/scripts/ffmpeg-mobile.sh: sources,
 # build trees and the installed prefixes, all machine-built.
 /src/vendor/
+
+# Local Concat release binary & web caches
+/bin/
+node_modules/
+/web/.cache/
+/web/projects/
+

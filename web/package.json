@@ -1,0 +1,11 @@
+{
+  "name": "concat-web",
+  "version": "0.2.8",
+  "description": "Web interface for Concat video editor powered by the native Concat Rust engine (MCP/JSON-RPC)",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "license": "AGPL-3.0-or-later"
+}
